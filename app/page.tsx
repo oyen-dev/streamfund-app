@@ -1,25 +1,24 @@
-"use client";
-
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useSession } from "next-auth/react";
 import React from "react";
 
 const TestLogin = () => {
-  const session = useSession();
-
   return (
-    <>
+    <div className="flex flex-col items-center justify-center h-screen">
       <ConnectButton />
 
-      <div className="flex">
-        <p className="text-2xl">
-          {session.status === "authenticated"
-            ? `Logged in as ${session.data?.user?.address}`
-            : "Not logged in"}
-        </p>
-        <p className="text-2xl">{session.data?.accessToken}</p>
-      </div>
-    </>
+      <p className="font-inter text-lg text-gray-700 mt-4">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Error beatae
+        soluta adipisci vitae deserunt, cupiditate hic reprehenderit sunt quasi
+        ad corporis eum! Illo, aut voluptatem similique animi laboriosam
+        sapiente tempora.
+      </p>
+      <p className="font-space text-lg text-gray-700 mt-4">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Error beatae
+        soluta adipisci vitae deserunt, cupiditate hic reprehenderit sunt quasi
+        ad corporis eum! Illo, aut voluptatem similique animi laboriosam
+        sapiente tempora.
+      </p>
+    </div>
   );
 };
 
