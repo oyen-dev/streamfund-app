@@ -105,6 +105,9 @@
   .text-body-sm {
     @apply text-[14px] md:text-[16px] lg:text-[18px] leading-[1.5] tracking-[0%];
   }
+  .text-input-amount {
+    @apply text-[24px] md:text-[28px] lg:text-[32px] leading-[1.5] tracking-[-1%];
+  }
 
   /* Utility Text */
   .text-caption {

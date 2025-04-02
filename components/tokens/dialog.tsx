@@ -1,0 +1,118 @@
+import React from "react";
+
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { CaretDown, X, MagnifyingGlass } from "@phosphor-icons/react/dist/ssr";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import Image from "next/image";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+
+const TokenDialog = () => {
+  return (
+    <div className="absolute inset-y-0 right-4 flex items-center">
+      <Dialog>
+        <DialogTrigger className="flex flex-row space-x-2 items-center justify-center py-2 px-4 border border-neutral-800 bg-background-base text-neutral-20 rounded-lg cursor-pointer">
+          <div className="relative w-4 h-4">
+            <Image
+              src="/icons/streamfund.svg"
+              alt="Streamfund"
+              fill
+              className="object-contain"
+            />
+          </div>
+          ETH
+          <CaretDown className="w-4 h-4 ml-2" />
+        </DialogTrigger>
+        <DialogContent className="bg-background-base border border-neutral-800 rounded-2xl [&>button:last-child]:hidden">
+          <DialogHeader className="flex flex-col w-full items-center justify-start space-y-3">
+            <div className="flex flex-row w-full h-full items-center justify-between pb-2">
+              <DialogTitle className="text-heading-6 font-semibold text-neutral-20">
+                Select a token to support
+              </DialogTitle>
+              <DialogClose asChild>
+                <Button
+                  variant="ghost"
+                  className="p-0 w-8 h-8 rounded-full cursor-pointer hover:bg-neutral-800"
+                >
+                  <X className="w-4 h-4 text-neutral-20" />
+                </Button>
+              </DialogClose>
+            </div>
+
+            <div className="flex relative w-full h-full">
+              <Input
+                type="text"
+                inputMode="text"
+                placeholder="Search for a token"
+                className="border border-neutral-800 bg-neutral-900 text-neutral-20 rounded-lg py-8 font-inter text-body pr-[20%] focus-visible:text-neutral-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                StartIcon={MagnifyingGlass}
+                startClassName="w-8 h-8"
+              />
+              <div className="absolute inset-y-0 right-3 flex items-center">
+                <Select defaultValue="usdt">
+                  <SelectTrigger className="w-full h-full border-0 bg-transparent focus:ring-0">
+                    <SelectValue>
+                      <div className="relative w-6 h-6">
+                        <Image
+                          src="/icons/streamfund.svg"
+                          alt="Streamfund"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent className="bg-background-base dark:bg-background-base border border-neutral-800 dark:border-b-neutral-800 text-neutral-800 dark:text-neutral-800 rounded-2xl p-3 w-full min-w-xs max-w-md">
+                    <SelectItem
+                      value="usdt"
+                      className="flex items-center space-x-2 focus:bg-neutral-800"
+                    >
+                      <div className="relative w-5 h-5">
+                        <Image
+                          src="/icons/streamfund.svg"
+                          alt="Streamfund"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                      <p className="text-neutral-20 text-body">Ethereum</p>
+                    </SelectItem>
+                    <SelectItem
+                      value="base"
+                      className="flex items-center space-x-2 focus:bg-neutral-800"
+                    >
+                      <div className="relative w-5 h-5">
+                        <Image
+                          src="/icons/streamfund.svg"
+                          alt="Streamfund"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                      <p className="text-neutral-20 text-body">Base</p>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
+
+export default TokenDialog;
