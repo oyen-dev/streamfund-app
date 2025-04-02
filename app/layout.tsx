@@ -6,6 +6,7 @@ import AuthProvider from "@/providers/AuthProvider";
 import { getServerSession, Session } from "next-auth";
 import { authConfig } from "@/config/auth";
 import { headers } from "next/headers";
+import Header from "@/components/layout/header";
 
 const SpaceFont = Space_Grotesk({
   variable: "--font-space",
@@ -92,6 +93,7 @@ export default async function RootLayout({
         className={`${SpaceFont.variable} ${InterFont.variable} antialiased`}
       >
         <AuthProvider session={session} cookie={cookie}>
+          <Header />
           {children}
         </AuthProvider>
       </body>

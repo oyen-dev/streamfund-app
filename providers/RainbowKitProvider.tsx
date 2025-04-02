@@ -41,7 +41,7 @@ const RainbowKitProvider = ({ children, cookie }: RainbowKitProviderProps) => {
       modalBackdrop: "rgba(0, 0, 0, 0.5)",
       modalBackground: "hsl(228, 9%, 11%)",
       modalBorder: "hsl(228, 5%, 18%)",
-      modalText: "hsl(0, 0%, 100z%)",
+      modalText: "hsl(0, 0%, 100%)",
       modalTextDim: "rgba(60, 66, 66, 0.3)",
       modalTextSecondary: "hsl(0, 0%, 60%)",
       profileAction: "hsl(218, 9%, 23%)",
@@ -63,12 +63,12 @@ const RainbowKitProvider = ({ children, cookie }: RainbowKitProviderProps) => {
       modalMobile: "24px",
     },
     shadows: {
-      connectButton: "0px 8px 32px rgba(0, 0, 0, 0.32)",
-      dialog: "0px 8px 32px rgba(0, 0, 0, 0.32)",
-      profileDetailsAction: "0px 2px 6px rgba(37, 41, 46, 0.04)",
-      selectedOption: "0px 2px 6px rgba(0, 0, 0, 0.24)",
-      selectedWallet: "0px 2px 6px rgba(0, 0, 0, 0.12)",
-      walletLogo: "0px 2px 16px rgba(0, 0, 0, 0.16)",
+      connectButton: "0px",
+      dialog: "0px",
+      profileDetailsAction: "0px",
+      selectedOption: "0px",
+      selectedWallet: "0px",
+      walletLogo: "0px",
     },
     blurs: {
       modalOverlay: "blur(0px)", // e.g. 'blur(4px)'

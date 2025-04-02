@@ -1,25 +1,28 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Image from "next/image";
 import React from "react";
 
-const TestLogin = () => {
+const Home = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <ConnectButton />
-
-      <p className="font-inter text-lg text-violet-600 mt-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Error beatae
-        soluta adipisci vitae deserunt, cupiditate hic reprehenderit sunt quasi
-        ad corporis eum! Illo, aut voluptatem similique animi laboriosam
-        sapiente tempora.
+    <div className="flex flex-col items-center justify-center h-screen p-5">
+      <h1 className="text-4xl font-bold text-center">Welcome to StreamFund!</h1>
+      <p className="mt-4 text-lg">
+        Engage with your favorite creators and support them through donations.
       </p>
-      <p className="font-space text-lg text-neutral-20 mt-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Error beatae
-        soluta adipisci vitae deserunt, cupiditate hic reprehenderit sunt quasi
-        ad corporis eum! Illo, aut voluptatem similique animi laboriosam
-        sapiente tempora.
-      </p>
+      <div className="flex flex-col items-center mt-8">
+        <Image
+          src="/images/streamfund.jpg"
+          alt="StreamFund"
+          className="rounded-lg shadow-lg"
+          width={500}
+          height={300}
+        />
+        <p className="mt-2 text-sm text-gray-500">
+          StreamFund is a platform that allows you to engage with your favorite
+          creators and support them through donations.
+        </p>
+      </div>
     </div>
   );
 };
 
-export default TestLogin;
+export default Home;
