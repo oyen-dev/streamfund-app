@@ -11,8 +11,8 @@ const StreamerTabs = () => {
   );
   return (
     <Tabs defaultValue={activeTab} className="w-full h-full">
-      <div className="px-6 py-4">
-        <TabsList className="flex flex-row w-full h-full gap-4 mx-auto overflow-x-auto bg-transparent scrollbar-hide">
+      <div className="py-4">
+        <TabsList className="flex flex-row items-center justify-start w-full h-full gap-4 overflow-x-auto bg-transparent scrollbar-hide">
           <TabsTrigger
             value="alert"
             onClick={() => setActiveTab("alert")}

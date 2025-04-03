@@ -8,7 +8,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { CaretDown, X, MagnifyingGlass } from "@phosphor-icons/react/dist/ssr";
+import {
+  CaretDown,
+  X,
+  MagnifyingGlass,
+  Coins,
+} from "@phosphor-icons/react/dist/ssr";
 import {
   Select,
   SelectContent,
@@ -19,6 +24,7 @@ import {
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import TokenList from "./token-list";
 
 const TokenDialog = () => {
   return (
@@ -36,10 +42,10 @@ const TokenDialog = () => {
           ETH
           <CaretDown className="w-4 h-4 ml-2" />
         </DialogTrigger>
-        <DialogContent className="bg-background-base border border-neutral-800 rounded-2xl [&>button:last-child]:hidden">
+        <DialogContent className="bg-background-base border border-neutral-800 rounded-2xl px-0 py-5 h-full max-h-[80vh] flex flex-col overflow-hidden [&>button:last-child]:hidden">
           <DialogHeader className="flex flex-col w-full items-center justify-start space-y-3">
-            <div className="flex flex-row w-full h-full items-center justify-between pb-2">
-              <DialogTitle className="text-heading-6 font-semibold text-neutral-20">
+            <div className="flex flex-row w-full h-full items-center justify-between px-5">
+              <DialogTitle className="text-heading-6 font-semibold text-neutral-20 font-inter">
                 Select a token to support
               </DialogTitle>
               <DialogClose asChild>
@@ -52,7 +58,7 @@ const TokenDialog = () => {
               </DialogClose>
             </div>
 
-            <div className="flex relative w-full h-full">
+            <div className="flex relative w-full h-full px-5">
               <Input
                 type="text"
                 inputMode="text"
@@ -61,9 +67,9 @@ const TokenDialog = () => {
                 StartIcon={MagnifyingGlass}
                 startClassName="w-8 h-8"
               />
-              <div className="absolute inset-y-0 right-3 flex items-center">
+              <div className="absolute inset-y-0 right-8 flex items-center">
                 <Select defaultValue="usdt">
-                  <SelectTrigger className="w-full h-full border-0 bg-transparent focus:ring-0">
+                  <SelectTrigger className="w-full h-full border-0 bg-transparent focus:ring-0 focus-visible:ring-1 focus-visible:outline-1">
                     <SelectValue>
                       <div className="relative w-6 h-6">
                         <Image
@@ -109,6 +115,27 @@ const TokenDialog = () => {
               </div>
             </div>
           </DialogHeader>
+
+          <div className="flex relative flex-col w-full h-full  space-y-2 py-3">
+            <div className="flex flex-row space-x-2 items-center justify-start px-5">
+              <Coins className="w-5 h-5 text-neutral-80" />
+              <p className="text-neutral-80 font-inter text-body-sm">
+                Available tokens
+              </p>
+            </div>
+
+            <div className="flex flex-col w-full h-full max-h-[60vh] flex-grow space-y-2 overflow-y-auto pb-10">
+              {Array.from({ length: 20 }, (_, i) => (
+                <TokenList
+                  key={i}
+                  tokenName={`Ethereum ${i + 1}`}
+                  tokenSymbol="ETH"
+                  tokenPrice="1000"
+                  tokenAmount="0.0032"
+                />
+              ))}
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
