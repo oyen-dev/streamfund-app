@@ -22,10 +22,10 @@ export const siweAdapter = createAuthenticationAdapter({
 
   createMessage: ({ nonce, address, chainId }) => {
     return createSiweMessage({
-      domain: window.location.hostname,
+      domain: process.env.URL!,
       address,
       statement: `You are signing in to StreamFund on ${new Date().toLocaleString()}`,
-      uri: window.location.origin,
+      uri: process.env.URL!,
       version: "1",
       chainId,
       nonce,
