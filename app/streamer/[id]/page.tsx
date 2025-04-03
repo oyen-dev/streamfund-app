@@ -1,12 +1,7 @@
 import StreamerBanner from "@/components/streamer/banner";
 import StreamerHeaderProfile from "@/components/streamer/header";
 import StreamerTabs from "@/components/streamer/tabs";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 export default function StreamerSupportPage() {
@@ -23,10 +18,6 @@ export default function StreamerSupportPage() {
         <CardContent className="flex flex-col items-center justify-center w-full space-y-5 md:flex-row md:space-y-0 md:space-x-5">
           <StreamerTabs />
         </CardContent>
-
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
       </Card>
     </div>
   );
