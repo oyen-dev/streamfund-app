@@ -7,7 +7,6 @@ import { getServerSession, Session } from "next-auth";
 import { authConfig } from "@/config/auth";
 import { headers } from "next/headers";
 import Header from "@/components/layout/header";
-import { signOut } from "next-auth/react";
 
 const SpaceFont = Space_Grotesk({
   variable: "--font-space",
@@ -88,10 +87,6 @@ export default async function RootLayout({
 }>) {
   const session = (await getServerSession(authConfig)) as Session;
   const cookie = (await headers()).get("cookie") as string;
-
-  if (!session) {
-    await signOut();
-  }
 
   return (
     <html lang="en">
