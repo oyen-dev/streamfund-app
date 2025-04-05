@@ -8,8 +8,8 @@ export default function StreamerSupportPage() {
   return (
     <div className="flex flex-col items-center min-h-screen p-5 space-y-6 text-white bg-black">
       <StreamerBanner />
-      <Card className="w-full max-w-5xl border bg-background-base border-neutral-800 rounded-2xl">
-        <CardHeader className="flex flex-col items-center justify-center w-full space-y-5 md:flex-row md:space-y-0 md:space-x-5">
+      <Card className="w-full max-w-2xl border bg-background-base border-neutral-800 rounded-2xl">
+        <CardHeader>
           <StreamerHeaderProfile />
         </CardHeader>
 

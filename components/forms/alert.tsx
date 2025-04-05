@@ -22,6 +22,7 @@ import { QUICK_AMOUNTS } from "@/constants/common";
 import Link from "next/link";
 import Image from "next/image";
 import { CaretRight } from "@phosphor-icons/react/dist/ssr";
+import WalletMethod from "../rainbow/wallet-method";
 
 const formSchema = z.object({
   address: z.string().refine((value) => ethers.isAddress(value), {
@@ -231,35 +232,18 @@ const AlertForm = () => {
           </div>
 
           <div className="flex flex-col w-full h-full items-center justify-start space-y-2">
-            <Button
-              className="w-full flex flex-row items-center justify-between rounded-lg p-7 cursor-pointer bg-neutral-800 text-neutral-20 hover:bg-neutral-700 focus:ring-1 focus:ring-violet-500 focus:ring-offset-0"
-              type="button"
-            >
-              <div className="flex flex-row items-center justify-start space-x-2">
-                <div className="relative w-5 h-5">
-                  <Image
-                    src="/icons/streamfund.svg"
-                    alt="Streamfund"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <p className="text-neutral-20 text-label font-semibold flex flex-row items-center justify-center space-x-2">
-                  Connect Wallet
-                </p>
-              </div>
-              <CaretRight className="w-8 h-8" />
-            </Button>
+            <WalletMethod />
 
             <Button
               className="w-full flex flex-row items-center justify-between rounded-lg p-7 cursor-pointer bg-neutral-800 text-neutral-20 hover:bg-neutral-700 focus:ring-1 focus:ring-violet-500 focus:ring-offset-0"
               type="button"
+              disabled
             >
               <div className="flex flex-row items-center justify-start space-x-2">
                 <div className="relative w-5 h-5">
                   <Image
-                    src="/icons/streamfund.svg"
-                    alt="Streamfund"
+                    src="/icons/lifi-method.svg"
+                    alt="LiFi"
                     fill
                     className="object-contain"
                   />
@@ -267,6 +251,9 @@ const AlertForm = () => {
                 <p className="text-neutral-20 text-label font-semibold flex flex-row items-center justify-center space-x-2">
                   LiFi
                 </p>
+                <span className="text-label text-neutral-80">
+                  (Coming Soon)
+                </span>
               </div>
               <CaretRight className="w-8 h-8" />
             </Button>
@@ -274,12 +261,13 @@ const AlertForm = () => {
             <Button
               className="w-full flex flex-row items-center justify-between rounded-lg p-7 cursor-pointer bg-neutral-800 text-neutral-20 hover:bg-neutral-700 focus:ring-1 focus:ring-violet-500 focus:ring-offset-0"
               type="button"
+              disabled
             >
               <div className="flex flex-row items-center justify-start space-x-2">
                 <div className="relative w-5 h-5">
                   <Image
-                    src="/icons/streamfund.svg"
-                    alt="Streamfund"
+                    src="/icons/binance-method.svg"
+                    alt="Binance Pay"
                     fill
                     className="object-contain"
                   />
@@ -287,6 +275,9 @@ const AlertForm = () => {
                 <p className="text-neutral-20 text-label font-semibold flex flex-row items-center justify-center space-x-2">
                   Binance Pay
                 </p>
+                <span className="text-label text-neutral-80">
+                  (Coming Soon)
+                </span>
               </div>
               <CaretRight className="w-8 h-8" />
             </Button>

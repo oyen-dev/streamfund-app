@@ -9,14 +9,16 @@ import Link from "next/link";
 
 const StreamerHeaderProfile = () => {
   return (
-    <>
-      <div className="relative w-24 h-24 border-4 rounded-full md:w-30 md:h-30 lg:w-36 lg:h-36 border-violet-500">
-        <Image
-          src="/images/streamfund.jpg"
-          fill
-          alt="Profile"
-          className="object-cover rounded-full"
-        />
+    <div className="flex flex-col items-center justify-center w-full space-y-5 md:flex-row md:space-y-0 md:space-x-5">
+      <div className="flex">
+        <div className="relative w-24 h-24 border-4 rounded-full md:w-30 md:h-30 lg:w-36 lg:h-36 border-violet-500">
+          <Image
+            src="/images/streamfund.jpg"
+            fill
+            alt="Profile"
+            className="object-cover rounded-full"
+          />
+        </div>
       </div>
 
       <div className="flex flex-col items-center justify-center space-y-3 md:justify-start md:items-start">
@@ -64,7 +66,7 @@ const StreamerHeaderProfile = () => {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

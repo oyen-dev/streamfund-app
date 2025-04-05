@@ -12,10 +12,8 @@ interface AuthProviderProps {
 }
 
 const AuthProvider = ({ children, session, cookie }: AuthProviderProps) => {
-  if (!session) {
-    if (typeof window !== "undefined") {
-      signOut({ redirect: false });
-    }
+  if (!session && typeof window !== "undefined") {
+    signOut({ redirect: false });
   }
   return (
     <SessionProvider baseUrl={process.env.NEXTAUTH_URL} session={session}>
