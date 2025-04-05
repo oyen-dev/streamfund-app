@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 
 export default function StreamerSupportPage() {
   return (
-    <div className="flex flex-col items-center min-h-screen p-5 space-y-6 text-white bg-black">
+    <div className="flex flex-col items-center min-h-screen p-5 space-y-6 text-white">
       <StreamerBanner />
       <Card className="w-full max-w-2xl border bg-background-base border-neutral-800 rounded-2xl">
         <CardHeader>

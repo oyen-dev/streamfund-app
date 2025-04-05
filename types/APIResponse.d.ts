@@ -40,6 +40,7 @@ declare global {
     updated_at: string;
     deleted_at: string | null;
     chain: Chain;
+    price: number;
   }
 
   interface APIBaseResponse {

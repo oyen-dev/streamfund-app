@@ -7,6 +7,7 @@ import { getServerSession, Session } from "next-auth";
 import { authConfig } from "@/config/auth";
 import { headers } from "next/headers";
 import Header from "@/components/layout/header";
+import { Toaster } from "react-hot-toast";
 
 const SpaceFont = Space_Grotesk({
   variable: "--font-space",
@@ -91,11 +92,17 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${SpaceFont.variable} ${InterFont.variable} antialiased`}
+        className={`${SpaceFont.variable} ${InterFont.variable} antialiased bg-background-base`}
       >
         <AuthProvider session={session} cookie={cookie}>
           <Header />
           {children}
+          <Toaster
+            toastOptions={{
+              duration: 3000,
+              position: "top-center",
+            }}
+          />
         </AuthProvider>
       </body>
     </html>

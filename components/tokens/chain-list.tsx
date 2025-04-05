@@ -27,6 +27,7 @@ const ChainList = ({ selectedChain, setSelectedChain }: ChainListProps) => {
           method: "GET",
           url: `/api/v1/chains?limit=100&page=1&q=`,
         }),
+      refetchInterval: 60 * 1000, // 1 minute
     });
 
   const handleChainSelect = (id: string) => {

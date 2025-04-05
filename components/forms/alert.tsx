@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,21 +17,23 @@ import { Input } from "@/components/ui/input";
 import { ethers } from "ethers";
 import TokenDialog from "../tokens/dialog";
 import { Button } from "../ui/button";
-import { cn } from "@/lib/utils";
+import { cn, simplifyNumber } from "@/lib/utils";
 import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
-import { QUICK_AMOUNTS } from "@/constants/common";
 import Link from "next/link";
 import Image from "next/image";
-import { CaretRight } from "@phosphor-icons/react/dist/ssr";
+import { CaretRight, X } from "@phosphor-icons/react/dist/ssr";
 import WalletMethod from "../rainbow/wallet-method";
+import QuickAmountSelection from "../tokens/quick-amount";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   address: z.string().refine((value) => ethers.isAddress(value), {
     message: "Invalid EVM address",
   }),
   amount: z.string().refine((value) => {
-    const num = parseFloat(value);
+    const sanitizedValue = value.replace(",", ".");
+    const num = parseFloat(sanitizedValue);
     return !isNaN(num) && num > 0;
   }),
   quickAmount: z.number().optional(),
@@ -42,6 +46,7 @@ const formSchema = z.object({
 
 const AlertForm = () => {
   const [quickAmount, setQuickAmount] = useState<number>();
+  const [selectedToken, setSelectedToken] = useState<Token | undefined>();
   const [isAnonymous, setIsAnonymous] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,6 +60,51 @@ const AlertForm = () => {
       from: "",
     },
   });
+
+  const handleQuickAmountChange = (amount: number) => {
+    if (selectedToken === undefined) {
+      toast.custom((t) => (
+        <div
+          className={cn(
+            "flex flex-row items-center justify-start space-x-2 bg-neutral-900 text-neutral-20 p-2.5 rounded-lg border border-neutral-800",
+            t.visible ? "animate-enter" : "animate-leave"
+          )}
+        >
+          <X
+            className="text-red-500 cursor-pointer w-5 h-5"
+            onClick={() => toast.dismiss(t.id)}
+          />
+          <p className="text-neutral-20 text-label">
+            Please select a token first.
+          </p>
+        </div>
+      ));
+      return;
+    }
+
+    if (quickAmount === amount) {
+      setQuickAmount(undefined);
+      form.setValue("quickAmount", undefined);
+      form.setValue("amount", "");
+    } else {
+      setQuickAmount(amount);
+      form.setValue("quickAmount", amount);
+
+      const rawAmountValue = amount / selectedToken.price;
+
+      // Dynamically determine display decimals based on token decimals
+      const simplifiedAmountValue = simplifyNumber(
+        rawAmountValue,
+        selectedToken.decimal
+      );
+
+      form.setValue("amount", simplifiedAmountValue, {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+      });
+    }
+  };
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     console.log("Form submitted", data);
@@ -74,11 +124,13 @@ const AlertForm = () => {
                 <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <div className="mt-1 relative">
+                <div className="mt-1 relative" lang="fr-fr">
                   <Input
                     type="number"
+                    id="amount"
                     autoComplete="off"
                     inputMode="decimal"
+                    step="any"
                     placeholder="0"
                     {...field}
                     onKeyDown={(e) => {
@@ -86,22 +138,40 @@ const AlertForm = () => {
                         e.preventDefault();
                       }
                     }}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(",", ".");
+                      field.onChange(value);
+                    }}
                     className="border border-neutral-800 bg-neutral-900 text-neutral-20 not-focus:text-neutral-20 rounded-lg py-10 font-inter text-input-amount focus-visible:text-neutral-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
-                  {field.value && Number(field.value) !== 0 && (
-                    <p className="absolute text-neutral-80 font-inter text-overline py-2">
-                      Equivalent to{" "}
-                      {new Intl.NumberFormat("en-US", {
-                        currency: "USD",
-                        style: "currency",
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 2,
-                      }).format(Number(field.value))}
-                    </p>
-                  )}
-                  <TokenDialog />
+                  <TokenDialog
+                    selectedToken={selectedToken}
+                    setSelectedToken={setSelectedToken}
+                  />
                 </div>
               </FormControl>
+              {field.value && Number(field.value) !== 0 && selectedToken && (
+                <div className="flex relative flex-row items-center justify-between w-full h-full">
+                  <p className="text-neutral-80 font-inter text-overline">
+                    Equivalent to{" "}
+                    {new Intl.NumberFormat("en-US", {
+                      currency: "USD",
+                      style: "currency",
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2,
+                    }).format(Number(field.value) * selectedToken.price)}
+                  </p>
+                  <p className="text-neutral-80 font-inter text-overline">
+                    1 {selectedToken.symbol} ={" "}
+                    {new Intl.NumberFormat("en-US", {
+                      currency: "USD",
+                      style: "currency",
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2,
+                    }).format(selectedToken.price)}
+                  </p>
+                </div>
+              )}
               <FormMessage />
             </FormItem>
           )}
@@ -110,45 +180,15 @@ const AlertForm = () => {
         <FormField
           control={form.control}
           name="quickAmount"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
-              <FormLabel className="text-label text-neutral-20 pt-7">
+              <FormLabel className="text-label text-neutral-20 pt-2">
                 Quick Amount
               </FormLabel>
-              <div className="grid grid-cols-4 gap-4 w-full h-full bg-transparent">
-                {QUICK_AMOUNTS.map((amount, index) => (
-                  <Button
-                    key={index}
-                    variant="secondary"
-                    size="sm"
-                    type="button"
-                    className={cn(
-                      "rounded-lg p-5 border border-neutral-800 text-neutral-20 cursor-pointer hover:bg-violet-500/10",
-                      quickAmount === amount
-                        ? "border-violet-500 bg-violet-500/10"
-                        : "bg-transparent"
-                    )}
-                    onClick={() => {
-                      if (quickAmount === amount) {
-                        setQuickAmount(undefined);
-                        field.onChange("");
-                      } else {
-                        setQuickAmount(amount);
-                        field.onChange(amount);
-                      }
-                    }}
-                  >
-                    <p className="text-neutral-20 text-body">
-                      {new Intl.NumberFormat("en-US", {
-                        currency: "USD",
-                        style: "currency",
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 2,
-                      }).format(Number(amount))}
-                    </p>
-                  </Button>
-                ))}
-              </div>
+              <QuickAmountSelection
+                quickAmount={quickAmount}
+                handleQuickAmountChange={handleQuickAmountChange}
+              />
               <FormMessage />
             </FormItem>
           )}

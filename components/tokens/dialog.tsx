@@ -26,11 +26,16 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchProxy } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
 
-const TokenDialog = () => {
+interface TokenDialogProps {
+  selectedToken: Token | undefined;
+  setSelectedToken: (token: Token | undefined) => void;
+}
+
+const TokenDialog = ({ selectedToken, setSelectedToken }: TokenDialogProps) => {
   const [selectedChain, setSelectedChain] = useState<Chain | undefined>();
-  const [selectedToken, setSelectedToken] = useState<Token | undefined>();
   const [queryToken, setQueryToken] = useState<string>("");
   const [open, setOpen] = useState(false);
+
   const debouncedQueryToken = useDebounceCallback(setQueryToken, 500);
 
   const { data: tokenData, isLoading: isTokenLoading } =
@@ -49,9 +54,9 @@ const TokenDialog = () => {
           method: "GET",
           url,
         });
-
         return response;
       },
+      refetchInterval: 60 * 1000, // 1 minute
     });
 
   return (
