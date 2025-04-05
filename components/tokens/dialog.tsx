@@ -21,22 +21,72 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import TokenList from "./token-list";
 import ChainList from "./chain-list";
+import { useDebounceCallback } from "usehooks-ts";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProxy } from "@/lib/utils";
+import { Skeleton } from "../ui/skeleton";
 
 const TokenDialog = () => {
   const [selectedChain, setSelectedChain] = useState<Chain | undefined>();
+  const [selectedToken, setSelectedToken] = useState<Token | undefined>();
+  const [queryToken, setQueryToken] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const debouncedQueryToken = useDebounceCallback(setQueryToken, 500);
+
+  const { data: tokenData, isLoading: isTokenLoading } =
+    useQuery<APITokenQueryResponse>({
+      queryKey: [
+        "tokens",
+        queryToken,
+        selectedChain ? selectedChain.id : "all",
+      ],
+      queryFn: async () => {
+        let url = `/api/v1/tokens?limit=100&page=1&q=${queryToken}`;
+        if (selectedChain) {
+          url += `&chain_id=${selectedChain.id}`;
+        }
+        const response = await fetchProxy({
+          method: "GET",
+          url,
+        });
+
+        return response;
+      },
+    });
+
   return (
     <div className="absolute inset-y-0 right-4 flex items-center">
-      <Dialog>
-        <DialogTrigger className="flex flex-row space-x-2 items-center justify-center py-2 px-4 border border-neutral-800 bg-background-base text-neutral-20 rounded-lg cursor-pointer">
-          <div className="relative w-4 h-4">
-            <Image
-              src="/icons/streamfund.svg"
-              alt="Streamfund"
-              fill
-              className="object-contain"
-            />
-          </div>
-          ETH
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger className="flex flex-row space-x-1 items-center justify-center py-2 px-4 border border-neutral-800 bg-transparent text-neutral-20 rounded-lg cursor-pointer">
+          {selectedToken ? (
+            <div className="flex flex-row space-x-2 items-center justify-start">
+              <div className="flex w-full h-full">
+                <div className="relative w-10 h-10 bg-neutral-800 rounded-full p-2">
+                  <Image
+                    src={selectedToken.image}
+                    alt={selectedToken.name}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <div className="relative w-5 h-5 -bottom-5 -left-5 bg-background-base rounded-full">
+                  <Image
+                    src={selectedToken.chain.image}
+                    alt={selectedToken.chain.name}
+                    fill
+                    className="object-contain rounded-full"
+                  />
+                </div>
+              </div>
+              <p className="text-neutral-20 font-inter text-body-sm font-semibold whitespace-nowrap">
+                {selectedToken.symbol}
+              </p>
+            </div>
+          ) : (
+            <p className="text-neutral-20 font-inter text-body-sm">
+              Select a token
+            </p>
+          )}
           <CaretDown className="w-4 h-4 ml-2" />
         </DialogTrigger>
         <DialogContent className="bg-background-base border border-neutral-800 rounded-2xl px-0 py-5 h-full max-h-[80vh] flex flex-col overflow-hidden [&>button:last-child]:hidden">
@@ -60,6 +110,9 @@ const TokenDialog = () => {
                 type="text"
                 inputMode="text"
                 placeholder="Search for a token"
+                onChange={(e) => {
+                  debouncedQueryToken(e.target.value);
+                }}
                 className="border border-neutral-800 bg-neutral-900 text-neutral-20 rounded-lg py-8 font-inter text-body pr-[20%] focus-visible:text-neutral-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 StartIcon={MagnifyingGlass}
                 startClassName="w-8 h-8"
@@ -80,15 +133,24 @@ const TokenDialog = () => {
             </div>
 
             <div className="flex flex-col w-full h-full max-h-[60vh] flex-grow space-y-2 overflow-y-auto pb-10">
-              {Array.from({ length: 20 }, (_, i) => (
-                <TokenList
-                  key={i}
-                  tokenName={`Ethereum ${i + 1}`}
-                  tokenSymbol="ETH"
-                  tokenPrice="1000"
-                  tokenAmount="0.0032"
-                />
-              ))}
+              {isTokenLoading ? (
+                <div className="flex flex-row space-x-2 items-center px-5 py-2.5 hover">
+                  <div className="flex">
+                    <Skeleton className="w-10 h-10 rounded-full bg-neutral-800" />
+                  </div>
+                  <Skeleton className="w-full h-10 rounded-lg bg-neutral-800" />
+                </div>
+              ) : (
+                tokenData?.data?.tokens.map((token) => (
+                  <TokenList
+                    key={token.id}
+                    token={token}
+                    setSelectedToken={setSelectedToken}
+                    selectedToken={selectedToken}
+                    setOpen={setOpen}
+                  />
+                ))
+              )}
             </div>
           </div>
         </DialogContent>

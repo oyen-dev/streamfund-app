@@ -19,7 +19,7 @@ interface ChainListProps {
 }
 
 const ChainList = ({ selectedChain, setSelectedChain }: ChainListProps) => {
-  const { data: chainData, isLoading: chainLoading } =
+  const { data: chainData, isLoading: isChainLoading } =
     useQuery<APIChainQueryResponse>({
       queryKey: ["chains"],
       queryFn: async () =>
@@ -78,7 +78,7 @@ const ChainList = ({ selectedChain, setSelectedChain }: ChainListProps) => {
             </p>
           </SelectItem>
 
-          {chainLoading ? (
+          {isChainLoading ? (
             <div className="flex flex-row space-x-2 items-center py-5">
               <div className="flex">
                 <Skeleton className="w-8 h-8 rounded-full bg-neutral-800" />

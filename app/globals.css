@@ -117,7 +117,7 @@
     @apply text-[14px] md:text-[16px] lg:text-[18px] leading-[1.4] tracking-[0%];
   }
   .text-overline {
-    @apply text-[10px] md:text-[12px] lg:text-[14px] leading-[1.5] tracking-[1.5%];
+    @apply text-[14px] lg:text-[14px] leading-[1.5] tracking-[1.5%];
   }
 }
 

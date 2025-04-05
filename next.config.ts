@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   images: {
-    domains: ["assets.coingecko.com", "localhost"],
+    domains: ["assets.coingecko.com", "coin-images.coingecko.com", "localhost"],
   },
   webpack: (config) => {
     config.resolve.fallback = { fs: false, net: false, tls: false };

@@ -54,6 +54,6 @@ export const siweAdapter = createAuthenticationAdapter({
   },
 
   signOut: async () => {
-    await signOut();
+    await signOut({ redirect: false });
   },
 });

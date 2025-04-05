@@ -12,9 +12,7 @@ export default function StreamerSupportPage() {
         <CardHeader>
           <StreamerHeaderProfile />
         </CardHeader>
-
         <Separator className="w-1 bg-neutral-800" />
-
         <CardContent className="flex flex-col items-center justify-center w-full space-y-5 md:flex-row md:space-y-0 md:space-x-5">
           <StreamerTabs />
         </CardContent>

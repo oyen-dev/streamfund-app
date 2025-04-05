@@ -27,6 +27,20 @@ declare global {
     deleted_at: string | null;
     collector: Collector[];
   }
+  interface Token {
+    id: string;
+    address: string;
+    decimal: number;
+    name: string;
+    symbol: string;
+    image: string;
+    coin_gecko_id: string;
+    chain_id: string;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+    chain: Chain;
+  }
 
   interface APIBaseResponse {
     success: boolean;
@@ -48,6 +62,12 @@ declare global {
   interface APIChainQueryResponse extends APIBaseResponse {
     data: {
       chains: Chain[];
+    };
+  }
+
+  interface APITokenQueryResponse extends APIBaseResponse {
+    data: {
+      tokens: Token[];
     };
   }
 }

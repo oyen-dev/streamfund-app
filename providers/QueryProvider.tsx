@@ -2,6 +2,7 @@
 
 import React, { PropsWithChildren, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const QueryProvider = ({ children }: PropsWithChildren) => {
   const [queryClient] = useState(
@@ -16,7 +17,10 @@ const QueryProvider = ({ children }: PropsWithChildren) => {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      {children}
+    </QueryClientProvider>
   );
 };
 
