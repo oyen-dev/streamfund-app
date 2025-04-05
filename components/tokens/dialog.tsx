@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 import {
   Dialog,
@@ -14,19 +16,14 @@ import {
   MagnifyingGlass,
   Coins,
 } from "@phosphor-icons/react/dist/ssr";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import TokenList from "./token-list";
+import ChainList from "./chain-list";
 
 const TokenDialog = () => {
+  const [selectedChain, setSelectedChain] = useState<Chain | undefined>();
   return (
     <div className="absolute inset-y-0 right-4 flex items-center">
       <Dialog>
@@ -67,52 +64,10 @@ const TokenDialog = () => {
                 StartIcon={MagnifyingGlass}
                 startClassName="w-8 h-8"
               />
-              <div className="absolute inset-y-0 right-8 flex items-center">
-                <Select defaultValue="usdt">
-                  <SelectTrigger className="w-full h-full border-0 bg-transparent focus:ring-0 focus-visible:ring-1 focus-visible:outline-1">
-                    <SelectValue>
-                      <div className="relative w-6 h-6">
-                        <Image
-                          src="/icons/streamfund.svg"
-                          alt="Streamfund"
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent className="bg-background-base dark:bg-background-base border border-neutral-800 dark:border-b-neutral-800 text-neutral-800 dark:text-neutral-800 rounded-2xl p-3 w-full min-w-xs max-w-md">
-                    <SelectItem
-                      value="usdt"
-                      className="flex items-center space-x-2 focus:bg-neutral-800"
-                    >
-                      <div className="relative w-5 h-5">
-                        <Image
-                          src="/icons/streamfund.svg"
-                          alt="Streamfund"
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <p className="text-neutral-20 text-body">Ethereum</p>
-                    </SelectItem>
-                    <SelectItem
-                      value="base"
-                      className="flex items-center space-x-2 focus:bg-neutral-800"
-                    >
-                      <div className="relative w-5 h-5">
-                        <Image
-                          src="/icons/streamfund.svg"
-                          alt="Streamfund"
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <p className="text-neutral-20 text-body">Base</p>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <ChainList
+                selectedChain={selectedChain}
+                setSelectedChain={setSelectedChain}
+              />
             </div>
           </DialogHeader>
 
