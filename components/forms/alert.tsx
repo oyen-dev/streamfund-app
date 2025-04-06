@@ -329,14 +329,33 @@ const AlertForm = () => {
             <p className="text-body-sm font-semibold text-neutral-20">
               Total Amount :
             </p>
-            <p className="text-body-sm font-semibold text-neutral-20">
-              {new Intl.NumberFormat("en-US", {
-                currency: "USD",
-                style: "currency",
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 3,
-              }).format(Number(form.watch("amount")))}
-            </p>
+            {selectedToken && form.getValues("amount") ? (
+              <div className="flex flex-col items-end justify-center space-y-1 text-neutral-20">
+                <p className="text-body font-semibold text-neutral-20">
+                  {new Intl.NumberFormat("en-US", {
+                    currency: "USD",
+                    style: "currency",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2,
+                  }).format(
+                    parseFloat(form.watch("amount") || "0") *
+                      (selectedToken?.price || 0)
+                  )}
+                </p>
+                <p className="text-underline font-light text-neutral-20">
+                  {form.watch("amount")} {selectedToken?.symbol}
+                </p>
+              </div>
+            ) : (
+              <p className="text-body font-semibold text-neutral-20">
+                {new Intl.NumberFormat("en-US", {
+                  currency: "USD",
+                  style: "currency",
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2,
+                }).format(0)}
+              </p>
+            )}
           </div>
 
           <p className="w-full text-caption text-neutral-80 text-justify">
