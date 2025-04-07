@@ -2,12 +2,14 @@ declare module "next-auth" {
   interface User {
     accessToken: string;
     address: string;
+    chainId: number;
   }
 }
 
 declare module "next-auth" {
   interface Session {
     accessToken: string;
+    chainId: number;
     user: {
       address: string;
     };
@@ -18,6 +20,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     accessToken: string;
     address: string;
+    chainId: number;
   }
 }
 
@@ -30,6 +33,7 @@ interface User {
   id: string;
   accessToken: string;
   address: string;
+  chainId: number;
 }
 
 export const authConfig: NextAuthOptions = {
@@ -67,7 +71,8 @@ export const authConfig: NextAuthOptions = {
             return {
               id: siweMessage.address,
               address: siweMessage.address,
-              accessToken: "xxxx",
+              accessToken: credentials.signature,
+              chainId: siweMessage.chainId,
             };
           }
 
@@ -90,12 +95,14 @@ export const authConfig: NextAuthOptions = {
       if (user) {
         token.accessToken = user.accessToken;
         token.address = user.address;
+        token.chainId = user.chainId;
       }
       return token;
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
       session.user.address = token.address;
+      session.chainId = token.chainId;
       return session;
     },
   },

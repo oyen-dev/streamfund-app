@@ -6,6 +6,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -19,7 +20,7 @@ import {
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import TokenList from "./token-list";
+import Token from "./token";
 import ChainList from "./chain-list";
 import { useDebounceCallback } from "usehooks-ts";
 import { useQuery } from "@tanstack/react-query";
@@ -62,6 +63,9 @@ const TokenDialog = ({ selectedToken, setSelectedToken }: TokenDialogProps) => {
   return (
     <div className="absolute inset-y-0 right-4 flex items-center">
       <Dialog open={open} onOpenChange={setOpen}>
+        <DialogDescription className="hidden">
+          Select a token to support
+        </DialogDescription>
         <DialogTrigger className="flex flex-row space-x-1 items-center justify-center py-2 px-4 border border-neutral-800 bg-transparent text-neutral-20 rounded-lg cursor-pointer">
           {selectedToken ? (
             <div className="flex flex-row space-x-2 items-center justify-start">
@@ -118,7 +122,7 @@ const TokenDialog = ({ selectedToken, setSelectedToken }: TokenDialogProps) => {
                 onChange={(e) => {
                   debouncedQueryToken(e.target.value);
                 }}
-                className="border border-neutral-800 bg-neutral-900 text-neutral-20 rounded-lg py-8 font-inter text-body pr-[20%] focus-visible:text-neutral-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="border border-neutral-800 bg-neutral-900 text-neutral-20 selection:bg-violet-500 selection:text-neutral-800 not-focus:text-neutral-20 rounded-lg py-8 font-inter text-body pr-[20%] focus-visible:text-neutral-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 StartIcon={MagnifyingGlass}
                 startClassName="w-8 h-8"
               />
@@ -147,7 +151,7 @@ const TokenDialog = ({ selectedToken, setSelectedToken }: TokenDialogProps) => {
                 </div>
               ) : (
                 tokenData?.data?.tokens.map((token) => (
-                  <TokenList
+                  <Token
                     key={token.id}
                     token={token}
                     setSelectedToken={setSelectedToken}

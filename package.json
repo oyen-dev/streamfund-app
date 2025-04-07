@@ -22,6 +22,7 @@
     "@rainbow-me/rainbowkit": "^2.2.4",
     "@tanstack/react-query": "^5.70.0",
     "@tanstack/react-query-devtools": "^5.71.10",
+    "@wagmi/core": "^2.16.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "ethers": "^6.13.5",
@@ -37,7 +38,7 @@
     "tailwind-merge": "^3.1.0",
     "tw-animate-css": "^1.2.5",
     "usehooks-ts": "^3.1.1",
-    "viem": "2.x",
+    "viem": "~2.24.2",
     "wagmi": "^2.14.15",
     "zod": "^3.24.2",
     "zustand": "^5.0.3"

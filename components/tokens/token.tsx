@@ -1,19 +1,21 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
-
-interface TokenListProps {
+import TokenBalance from "./token-balance";
+interface TokenProps {
   token: Token;
   selectedToken: Token | undefined;
   setSelectedToken: (token: Token | undefined) => void;
   setOpen: (open: boolean) => void;
 }
 
-const TokenList = ({
+const Token = ({
   token,
   selectedToken,
   setSelectedToken,
   setOpen,
-}: TokenListProps) => {
+}: TokenProps) => {
   const handleTokenSelect = () => {
     if (selectedToken?.id === token.id) {
       setSelectedToken(undefined);
@@ -23,6 +25,7 @@ const TokenList = ({
     }
     setOpen(false);
   };
+
   return (
     <div
       className="group flex flex-row space-x-2 items-center justify-between px-5 py-2.5 hover:bg-neutral-800 cursor-pointer"
@@ -58,24 +61,9 @@ const TokenList = ({
         </div>
       </div>
 
-      {/* <div className="flex flex-col items-end justify-end space-y-0">
-        <p className="text-neutral-20 group-hover:text-violet-500 font-inter text-body-sm font-semibold">
-          {new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          }).format(Number(tokenPrice) * Number(tokenAmount))}
-        </p>
-        <p className="text-neutral-80 font-inter text-body-sm">
-          {new Intl.NumberFormat("en-US", {
-            minimumFractionDigits: 3,
-            maximumFractionDigits: 18,
-          }).format(Number(tokenAmount))}
-        </p>
-      </div> */}
+      <TokenBalance token={token} />
     </div>
   );
 };
 
-export default TokenList;
+export default Token;
