@@ -43,6 +43,33 @@ declare global {
     price: number;
   }
 
+  interface Bio {
+    id: string;
+    username: string;
+    bio: string;
+    image: string;
+    x: string | null;
+    tiktok: string | null;
+    instagram: string | null;
+    youtube: string | null;
+    website: string | null;
+    streamer_id: string;
+    viewer_id: string;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+  }
+
+  interface Streamer {
+    id: string;
+    address: string;
+    usd_total_support: number;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+    bio: Bio;
+  }
+
   interface APIBaseResponse {
     success: boolean;
     message: string;
@@ -69,6 +96,12 @@ declare global {
   interface APITokenQueryResponse extends APIBaseResponse {
     data: {
       tokens: Token[];
+    };
+  }
+
+  interface APIGetStreamerResponse extends APIBaseResponse {
+    data: {
+      streamer: Streamer;
     };
   }
 }

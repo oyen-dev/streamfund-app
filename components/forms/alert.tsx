@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { ethers } from "ethers";
 import TokenDialog from "../tokens/dialog";
 import { Button } from "../ui/button";
-import { cn, simplifyNumber } from "@/lib/utils";
+import { cn, roundToTwoDigits, simplifyNumber } from "@/lib/utils";
 import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
 import Link from "next/link";
@@ -44,7 +44,11 @@ const formSchema = z.object({
   from: z.string().min(1),
 });
 
-const AlertForm = () => {
+interface AlertFormProps {
+  streamer: Streamer;
+}
+
+const AlertForm = ({ streamer }: AlertFormProps) => {
   const [quickAmount, setQuickAmount] = useState<number>();
   const [selectedToken, setSelectedToken] = useState<Token | undefined>();
   const [isAnonymous, setIsAnonymous] = useState(false);
@@ -53,9 +57,9 @@ const AlertForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       amount: "",
-      address: "0x8844a5958178f0788a994ed19448e76a1f493248",
+      address: streamer.address,
       quickAmount: 0,
-      token: "0x8844a5958178f0788a994ed19448e76a1f493248",
+      token: selectedToken?.address || "",
       message: "",
       from: "",
     },
@@ -106,9 +110,47 @@ const AlertForm = () => {
     }
   };
 
+  const handleSelectToken = (token: Token | undefined) => {
+    if (token !== undefined) {
+      setSelectedToken(token);
+      form.setValue("token", token.address, {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+      });
+    }
+  };
+
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log("Form submitted", data);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    if (!selectedToken) {
+      toast.custom((t) => (
+        <div
+          className={cn(
+            "flex flex-row items-center justify-start space-x-2 bg-neutral-900 text-neutral-20 p-2.5 rounded-lg border border-neutral-800",
+            t.visible ? "animate-enter" : "animate-leave"
+          )}
+        >
+          <X
+            className="text-red-500 cursor-pointer w-5 h-5"
+            onClick={() => toast.dismiss(t.id)}
+          />
+          <p className="text-neutral-20 text-label">
+            Please select a token first.
+          </p>
+        </div>
+      ));
+      return;
+    }
+
+    const payload = {
+      address: data.address,
+      amount: BigInt(Number(data.amount) * Number(10 ** selectedToken.decimal)),
+      token: selectedToken.address,
+      message: data.message,
+    };
+    console.log("Payload", payload);
   };
 
   return (
@@ -142,11 +184,11 @@ const AlertForm = () => {
                       const value = e.target.value.replace(",", ".");
                       field.onChange(value);
                     }}
-                    className="border border-neutral-800 bg-neutral-900 text-neutral-20 not-focus:text-neutral-20 rounded-lg py-10 font-inter text-input-amount focus-visible:text-neutral-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="border border-neutral-800 bg-neutral-900 selection:bg-violet-500 selection:text-neutral-800 text-neutral-20 not-focus:text-neutral-20 rounded-lg py-10 font-inter text-input-amount focus-visible:text-neutral-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
                   <TokenDialog
+                    handleSelectToken={handleSelectToken}
                     selectedToken={selectedToken}
-                    setSelectedToken={setSelectedToken}
                   />
                 </div>
               </FormControl>
@@ -159,7 +201,11 @@ const AlertForm = () => {
                       style: "currency",
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 2,
-                    }).format(Number(field.value) * selectedToken.price)}
+                    }).format(
+                      roundToTwoDigits(
+                        Number(field.value) * selectedToken.price
+                      )
+                    )}
                   </p>
                   <p className="text-neutral-80 font-inter text-overline">
                     1 {selectedToken.symbol} ={" "}

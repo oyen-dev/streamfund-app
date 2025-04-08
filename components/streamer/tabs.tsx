@@ -5,7 +5,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BellRinging, Airplay, Waveform } from "@phosphor-icons/react/dist/ssr";
 import AlertForm from "../forms/alert";
 
-const StreamerTabs = () => {
+interface StreamerTabsProps {
+  streamer: Streamer;
+}
+
+const StreamerTabs = ({ streamer }: StreamerTabsProps) => {
   const [activeTab, setActiveTab] = useState<"alert" | "media" | "soundboard">(
     "alert"
   );
@@ -55,7 +59,7 @@ const StreamerTabs = () => {
         value="alert"
         className="p-5 border rounded-2xl border-neutral-800"
       >
-        <AlertForm />
+        <AlertForm streamer={streamer} />
       </TabsContent>
 
       <TabsContent value="media" className="px-6 mt-4">

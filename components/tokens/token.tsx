@@ -6,22 +6,22 @@ import TokenBalance from "./token-balance";
 interface TokenProps {
   token: Token;
   selectedToken: Token | undefined;
-  setSelectedToken: (token: Token | undefined) => void;
+  handleSelectToken: (token: Token | undefined) => void;
   setOpen: (open: boolean) => void;
 }
 
 const Token = ({
   token,
   selectedToken,
-  setSelectedToken,
+  handleSelectToken,
   setOpen,
 }: TokenProps) => {
   const handleTokenSelect = () => {
     if (selectedToken?.id === token.id) {
-      setSelectedToken(undefined);
+      handleSelectToken(undefined);
       return;
     } else {
-      setSelectedToken(token);
+      handleSelectToken(token);
     }
     setOpen(false);
   };

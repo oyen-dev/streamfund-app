@@ -36,6 +36,11 @@ export const simplifyNumber = (
   return truncatedValue.toFixed(displayDecimals).replace(/\.?0+$/, ""); // Remove trailing zeros
 };
 
+export function roundToTwoDigits(value: number): number {
+  const roundedValue = Math.ceil(value * 100) / 100;
+  return parseFloat(roundedValue.toFixed(2));
+}
+
 export const fetchProxy = async ({ method, url, body }: FetchProxyProps) => {
   try {
     console.log(`${process.env.NEXT_PUBLIC_APP_URL}/api/proxy?target=${url}`);

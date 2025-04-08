@@ -29,10 +29,13 @@ import { Skeleton } from "../ui/skeleton";
 
 interface TokenDialogProps {
   selectedToken: Token | undefined;
-  setSelectedToken: (token: Token | undefined) => void;
+  handleSelectToken: (token: Token | undefined) => void;
 }
 
-const TokenDialog = ({ selectedToken, setSelectedToken }: TokenDialogProps) => {
+const TokenDialog = ({
+  selectedToken,
+  handleSelectToken,
+}: TokenDialogProps) => {
   const [selectedChain, setSelectedChain] = useState<Chain | undefined>();
   const [queryToken, setQueryToken] = useState<string>("");
   const [open, setOpen] = useState(false);
@@ -154,7 +157,7 @@ const TokenDialog = ({ selectedToken, setSelectedToken }: TokenDialogProps) => {
                   <Token
                     key={token.id}
                     token={token}
-                    setSelectedToken={setSelectedToken}
+                    handleSelectToken={handleSelectToken}
                     selectedToken={selectedToken}
                     setOpen={setOpen}
                   />
