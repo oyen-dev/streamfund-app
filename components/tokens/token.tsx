@@ -38,7 +38,8 @@ const Token = ({
               src={token.image}
               alt={token.name}
               fill
-              className="object-contain"
+              sizes="100%"
+              className="object-contain rounded-full"
             />
           </div>
           <div className="relative w-5 h-5 -bottom-5 -left-5 bg-background-base rounded-full">
@@ -46,6 +47,7 @@ const Token = ({
               src={token.chain.image}
               alt={token.chain.name}
               fill
+              sizes="100%"
               className="object-contain rounded-full"
             />
           </div>

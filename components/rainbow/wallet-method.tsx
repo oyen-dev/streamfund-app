@@ -44,6 +44,7 @@ const WalletMethod = () => {
             src="/icons/wallet-method.svg"
             alt="Connect Wallet"
             fill
+            sizes="100%"
             className="object-contain"
           />
         </div>

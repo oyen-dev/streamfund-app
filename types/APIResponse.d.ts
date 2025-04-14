@@ -87,6 +87,7 @@ declare global {
     message: string[];
     statusCode: number;
   }
+
   interface APIChainQueryResponse extends APIBaseResponse {
     data: {
       chains: Chain[];

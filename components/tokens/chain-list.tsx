@@ -56,6 +56,7 @@ const ChainList = ({ selectedChain, setSelectedChain }: ChainListProps) => {
                     : selectedChain.name
                 }
                 fill
+                sizes="100%"
                 className={cn("object-contain", selectedChain && "rounded-lg")}
               />
             </div>
@@ -71,6 +72,7 @@ const ChainList = ({ selectedChain, setSelectedChain }: ChainListProps) => {
                 src="/icons/all-networks.png"
                 alt="All Networks"
                 fill
+                sizes="100%"
                 className="object-contain"
               />
             </div>
@@ -98,6 +100,7 @@ const ChainList = ({ selectedChain, setSelectedChain }: ChainListProps) => {
                     src={chain.image}
                     alt={chain.name}
                     fill
+                    sizes="100%"
                     className="object-contain rounded-full"
                   />
                 </div>

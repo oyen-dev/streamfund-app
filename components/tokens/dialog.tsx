@@ -78,7 +78,8 @@ const TokenDialog = ({
                     src={selectedToken.image}
                     alt={selectedToken.name}
                     fill
-                    className="object-contain"
+                    sizes="100%"
+                    className="object-contain rounded-full"
                   />
                 </div>
                 <div className="relative w-5 h-5 -bottom-5 -left-5 bg-background-base rounded-full">
@@ -86,6 +87,7 @@ const TokenDialog = ({
                     src={selectedToken.chain.image}
                     alt={selectedToken.chain.name}
                     fill
+                    sizes="100%"
                     className="object-contain rounded-full"
                   />
                 </div>

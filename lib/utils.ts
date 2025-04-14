@@ -37,7 +37,7 @@ export const simplifyNumber = (
 };
 
 export function roundToTwoDigits(value: number): number {
-  const roundedValue = Math.ceil(value * 100) / 100;
+  const roundedValue = Math.round(value * 100) / 100;
   return parseFloat(roundedValue.toFixed(2));
 }
 

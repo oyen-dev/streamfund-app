@@ -112,6 +112,7 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
 
   const handleSelectToken = (token: Token | undefined) => {
     if (token !== undefined) {
+      console.log("selectedToken", token);
       setSelectedToken(token);
       form.setValue("token", token.address, {
         shouldValidate: true,
@@ -213,7 +214,7 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
                       currency: "USD",
                       style: "currency",
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 10,
                     }).format(selectedToken.price)}
                   </p>
                 </div>
@@ -331,6 +332,7 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
                     src="/icons/lifi-method.svg"
                     alt="LiFi"
                     fill
+                    sizes="100%"
                     className="object-contain"
                   />
                 </div>
@@ -355,6 +357,7 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
                     src="/icons/binance-method.svg"
                     alt="Binance Pay"
                     fill
+                    sizes="100%"
                     className="object-contain"
                   />
                 </div>
@@ -384,8 +387,10 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 2,
                   }).format(
-                    parseFloat(form.watch("amount") || "0") *
-                      (selectedToken?.price || 0)
+                    roundToTwoDigits(
+                      parseFloat(form.watch("amount") || "0") *
+                        (selectedToken?.price || 0)
+                    )
                   )}
                 </p>
                 <p className="text-underline font-light text-neutral-20">

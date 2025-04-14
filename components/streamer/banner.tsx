@@ -9,6 +9,7 @@ const StreamerBanner = () => {
         fill
         loading="lazy"
         alt="Banner"
+        sizes="100%"
         className="object-cover rounded-2xl"
       />
     </div>
