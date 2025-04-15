@@ -26,6 +26,7 @@ import { CaretRight, X } from "@phosphor-icons/react/dist/ssr";
 import WalletMethod from "../rainbow/wallet-method";
 import QuickAmountSelection from "../tokens/quick-amount";
 import toast from "react-hot-toast";
+import DialogAlertSupport from "../dialog/alert-support";
 
 const formSchema = z.object({
   address: z.string().refine((value) => ethers.isAddress(value), {
@@ -52,6 +53,13 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
   const [quickAmount, setQuickAmount] = useState<number>();
   const [selectedToken, setSelectedToken] = useState<Token | undefined>();
   const [isAnonymous, setIsAnonymous] = useState(false);
+  const [support, setSupport] = useState<SupportData>({
+    to: "",
+    amount: BigInt(0),
+    token: selectedToken,
+    message: "",
+    from: "",
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -112,7 +120,6 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
 
   const handleSelectToken = (token: Token | undefined) => {
     if (token !== undefined) {
-      console.log("selectedToken", token);
       setSelectedToken(token);
       form.setValue("token", token.address, {
         shouldValidate: true,
@@ -144,14 +151,13 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
       ));
       return;
     }
-
-    const payload = {
-      address: data.address,
+    setSupport({
+      to: data.address,
       amount: BigInt(Number(data.amount) * Number(10 ** selectedToken.decimal)),
-      token: selectedToken.address,
+      token: selectedToken,
       message: data.message,
-    };
-    console.log("Payload", payload);
+      from: data.from,
+    });
   };
 
   return (
@@ -421,14 +427,10 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
             . Please double-check and ensure that you are sending the correct
             amount and coin/token to the streamer.
           </p>
-          <Button
-            variant="default"
-            type="submit"
-            className="w-full rounded-lg p-7 cursor-pointer bg-violet-500 text-neutral-800 hover:bg-violet-600 focus:ring-2 focus:ring-violet-500 focus:ring-offset-0"
+          <DialogAlertSupport
             disabled={!form.formState.isValid}
-          >
-            Support
-          </Button>
+            support={support}
+          />
         </div>
       </form>
     </Form>

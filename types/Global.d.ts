@@ -6,6 +6,13 @@
 export {};
 
 declare global {
+  interface SupportData {
+    to: string;
+    amount: bigint;
+    token: Token | undefined;
+    message: string;
+    from: string;
+  }
   interface ServerSidePageProps {
     params: {
       id: string;

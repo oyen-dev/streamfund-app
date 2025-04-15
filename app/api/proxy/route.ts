@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
-  const targetURL = url.search.replace("?target=", "");
+  const targetURL = decodeURIComponent(url.search.replace("?target=", ""));
 
   // const session = await getServerSession(authConfig);
   // if (!session) {
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const url = new URL(request.url);
-  const targetURL = url.search.replace("?target=", "");
+  const targetURL = decodeURIComponent(url.search.replace("?target=", ""));
 
   // const session = await getServerSession(authConfig);
   // if (!session) {
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   const url = new URL(request.url);
-  const targetURL = url.search.replace("?target=", "");
+  const targetURL = decodeURIComponent(url.search.replace("?target=", ""));
 
   // const session = await getServerSession(authConfig);
   // if (!session) {
@@ -87,7 +87,7 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   const url = new URL(request.url);
-  const targetURL = url.search.replace("?target=", "");
+  const targetURL = decodeURIComponent(url.search.replace("?target=", ""));
 
   // const session = await getServerSession(authConfig);
   // if (!session) {

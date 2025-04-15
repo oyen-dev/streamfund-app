@@ -15,6 +15,7 @@ export const NATIVE_TOKEN_ADDRESS =
 
 export const getStreamFundAddresses = (chainId: number): Address => {
   const contracts = {
+    0: "0x",
     [base.id]: "0xstr",
     [arbitrum.id]: "0xstr",
     [optimism.id]: "0xstr",

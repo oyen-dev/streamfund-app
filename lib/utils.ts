@@ -43,7 +43,6 @@ export function roundToTwoDigits(value: number): number {
 
 export const fetchProxy = async ({ method, url, body }: FetchProxyProps) => {
   try {
-    console.log(`${process.env.NEXT_PUBLIC_APP_URL}/api/proxy?target=${url}`);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/proxy?target=${url}`,
       {
@@ -55,15 +54,7 @@ export const fetchProxy = async ({ method, url, body }: FetchProxyProps) => {
       }
     );
 
-    const result = await response.json();
-
-    if (result.error) {
-      const message = Array.isArray(result.message)
-        ? result.message[0]
-        : result.message;
-      return Promise.reject(message);
-    }
-    return result;
+    return await response.json();
   } catch (error) {
     console.log(error);
     console.error(`Error in ${method} ${url}:`, error);
