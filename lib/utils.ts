@@ -16,6 +16,12 @@ export function truncateWalletAddress(address: string | undefined) {
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
 
+export function truncateUsernameOrWalletAddress(content: string | undefined) {
+  if (!content) return "";
+  if (content.length < 15) return content;
+  return `${content.slice(0, 6)}...${content.slice(-4)}`;
+}
+
 export const simplifyNumber = (
   value: number,
   tokenDecimals: number

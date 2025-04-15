@@ -53,9 +53,9 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
   const [quickAmount, setQuickAmount] = useState<number>();
   const [selectedToken, setSelectedToken] = useState<Token | undefined>();
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [support, setSupport] = useState<SupportData>({
+  const [support, setSupport] = useState<SupportState>({
     to: "",
-    amount: BigInt(0),
+    amount: 0,
     token: selectedToken,
     message: "",
     from: "",
@@ -119,6 +119,9 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
   };
 
   const handleSelectToken = (token: Token | undefined) => {
+    setQuickAmount(undefined);
+    form.setValue("quickAmount", undefined);
+    form.setValue("amount", "");
     if (token !== undefined) {
       setSelectedToken(token);
       form.setValue("token", token.address, {
@@ -153,7 +156,7 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
     }
     setSupport({
       to: data.address,
-      amount: BigInt(Number(data.amount) * Number(10 ** selectedToken.decimal)),
+      amount: Number(data.amount),
       token: selectedToken,
       message: data.message,
       from: data.from,
@@ -380,41 +383,6 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
         </div>
 
         <div className="w-full flex flex-col items-center justify-center space-y-4">
-          <div className="flex flex-row w-full h-full items-center justify-between p-7 bg-neutral-900 rounded-lg border border-neutral-800">
-            <p className="text-body-sm font-semibold text-neutral-20">
-              Total Amount :
-            </p>
-            {selectedToken && form.getValues("amount") ? (
-              <div className="flex flex-col items-end justify-center space-y-1 text-neutral-20">
-                <p className="text-body font-semibold text-neutral-20">
-                  {new Intl.NumberFormat("en-US", {
-                    currency: "USD",
-                    style: "currency",
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 2,
-                  }).format(
-                    roundToTwoDigits(
-                      parseFloat(form.watch("amount") || "0") *
-                        (selectedToken?.price || 0)
-                    )
-                  )}
-                </p>
-                <p className="text-underline font-light text-neutral-20">
-                  {form.watch("amount")} {selectedToken?.symbol}
-                </p>
-              </div>
-            ) : (
-              <p className="text-body font-semibold text-neutral-20">
-                {new Intl.NumberFormat("en-US", {
-                  currency: "USD",
-                  style: "currency",
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 2,
-                }).format(0)}
-              </p>
-            )}
-          </div>
-
           <p className="w-full text-caption text-neutral-80 text-justify">
             By using our services, you agree to our{" "}
             <Link href="/terms" className="text-violet-500">

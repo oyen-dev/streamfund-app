@@ -6,9 +6,18 @@
 export {};
 
 declare global {
-  interface SupportData {
+  type StepType = "approve" | "support";
+  type ProgressType = "approve" | "sign" | "confirm";
+  type ProgressStatusType = "not-started" | "waiting" | "done";
+
+  interface ProgressState {
+    approve: ProgressStatusType;
+    sign: ProgressStatusType;
+    confirm: ProgressStatusType;
+  }
+  interface SupportState {
     to: string;
-    amount: bigint;
+    amount: number;
     token: Token | undefined;
     message: string;
     from: string;
