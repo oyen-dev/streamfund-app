@@ -19,7 +19,8 @@ const DialogSteps = ({ symbol, variant, progress }: DialogStepsProps) => {
       <div
         className={cn(
           "flex flex-row space-x-4 items-center justify-start w-full h-fit",
-          progress.approve !== "waiting" && "pl-1"
+          progress.approve !== "waiting" && "pl-1",
+          variant === "support" && "hidden"
         )}
       >
         <div className="relative flex w-fit h-fit">

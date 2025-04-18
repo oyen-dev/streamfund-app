@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -36,15 +36,15 @@ interface DialogAlertSupportProps {
 }
 
 const DialogAlertSupport = ({ disabled, support }: DialogAlertSupportProps) => {
-  // const [isTriggered, setIsTriggered] = useState(false);
   const pathname = usePathname();
   const { address } = useAccount();
-  const [triggered, setTriggered] = useState(true);
+  const [triggered, setTriggered] = useState(false);
   const [progress, setProgress] = useState<ProgressState>({
-    approve: "done",
-    sign: "waiting",
+    approve: "not-started",
+    sign: "not-started",
     confirm: "not-started",
   });
+
   const { data: allowance, isLoading: isAllowanceLoading } = useReadContract({
     abi: ERC20_ABI,
     address: support.token?.address as Address,
@@ -64,8 +64,49 @@ const DialogAlertSupport = ({ disabled, support }: DialogAlertSupportProps) => {
     },
   });
 
+  const resetState = () => {
+    setTriggered(false);
+    setProgress({
+      approve: "not-started",
+      sign: "not-started",
+      confirm: "not-started",
+    });
+  };
+
+  const handleSupport = () => {
+    setTriggered(true);
+
+    if (
+      allowance !== undefined &&
+      support.token &&
+      allowance <
+        BigInt(Number(support.amount) * Number(10 ** support.token.decimal))
+    ) {
+      setProgress((prev) => ({ ...prev, approve: "waiting" }));
+    } else {
+      setProgress((prev) => ({ ...prev, approve: "done", sign: "waiting" }));
+    }
+  };
+
+  useEffect(() => {
+    if (
+      allowance !== undefined &&
+      support?.token &&
+      allowance >=
+        BigInt(Number(support.amount) * Number(10 ** support.token.decimal))
+    ) {
+      setProgress((prev) => ({ ...prev, approve: "done" }));
+    }
+  }, [allowance, support]);
+
   return (
-    <Dialog>
+    <Dialog
+      onOpenChange={() => {
+        if (triggered) {
+          resetState();
+        }
+      }}
+    >
       <DialogTrigger asChild>
         <Button
           variant="default"
@@ -76,13 +117,20 @@ const DialogAlertSupport = ({ disabled, support }: DialogAlertSupportProps) => {
           Review
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-lg bg-background-base border border-neutral-800 rounded-2xl">
+      <DialogContent
+        onInteractOutside={(e) => {
+          if (triggered) {
+            e.preventDefault();
+          }
+        }}
+        className="sm:max-w-lg bg-background-base border border-neutral-800 rounded-2xl"
+      >
         <DialogHeader className="flex flex-row items-center justify-between w-full h-fit">
           <DialogTitle className="text-neutral-20">
             You&apos;re supporting
           </DialogTitle>
           <DialogClose>
-            <X className="w-8 h-8 text-neutral-20 cursor-pointer hover:bg-neutral-800 rounded-full p-1" />
+            <X className="size-8 text-neutral-20 cursor-pointer hover:bg-neutral-800 rounded-full p-1" />
           </DialogClose>
           <DialogDescription className="hidden"></DialogDescription>
         </DialogHeader>
@@ -176,7 +224,16 @@ const DialogAlertSupport = ({ disabled, support }: DialogAlertSupportProps) => {
             {triggered && (
               <DialogSteps
                 symbol={support.token.symbol}
-                variant="approve"
+                variant={
+                  allowance !== undefined &&
+                  allowance <
+                    BigInt(
+                      Number(support.amount) *
+                        Number(10 ** support.token.decimal)
+                    )
+                    ? "approve"
+                    : "support"
+                }
                 progress={progress}
               />
             )}
@@ -185,6 +242,7 @@ const DialogAlertSupport = ({ disabled, support }: DialogAlertSupportProps) => {
         <DialogFooter className="flex flex-row items-center justify-between w-full h-fit">
           <Button
             type="submit"
+            onClick={handleSupport}
             disabled={
               isAllowanceLoading || allowance === undefined || triggered
             }

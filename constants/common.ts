@@ -6,6 +6,7 @@ import {
   base,
   arbitrum,
   optimism,
+  eduChainTestnet,
 } from "viem/chains";
 
 export const QUICK_AMOUNTS = [1, 1.5, 5, 10];
@@ -22,6 +23,7 @@ export const getStreamFundAddresses = (chainId: number): Address => {
     [baseSepolia.id]: "0xf56FC21f3B799086099d74a9F7F505e6EA1f6fec",
     [arbitrumSepolia.id]: "0x4f346f17c50270E7A3Bfc859671D24eFAab0B1aF",
     [optimismSepolia.id]: "0x82EE3B66B125C0DED18035eC05fC2D2D3acAcAdB",
+    [eduChainTestnet.id]: "0x11fEB7694e03420032caEeEE4e508d1Ed3983166",
   };
 
   const contractAddress = Object.keys(contracts).find(
