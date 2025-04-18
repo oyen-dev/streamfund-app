@@ -20,6 +20,7 @@ export const giveAllowance = async (
       functionName: "approve",
       args: [contractAddress, maxAmount],
       account: user,
+      chainId: chainId as 84532 | 421614 | 11155420 | 656476 | undefined,
     });
 
     return result;
@@ -28,46 +29,3 @@ export const giveAllowance = async (
     return false;
   }
 };
-
-// export const readTokenBalance = async (
-//   chainId: number,
-//   address: Address,
-//   token: Address
-// ) => {
-//   try {
-//     console.log("CHain ID", chainId);
-//     const publicClient = getPublicClient(chainId);
-//     const result = await publicClient.readContract({
-//       abi: ERC20_ABI,
-//       address: token,
-//       functionName: "balanceOf",
-//       args: [address],
-//     });
-
-//     return result;
-//   } catch (error) {
-//     console.error(error);
-//     return false;
-//   }
-// };
-
-// export const readAllowance = async (
-//   chainId: number,
-//   address: Address,
-//   token: Address
-// ) => {
-//   try {
-//     const publicClient = getPublicClient(chainId);
-//     const result = await publicClient.readContract({
-//       abi: ERC20_ABI,
-//       address: token,
-//       functionName: "allowance",
-//       args: [address, STREAMFUND_ADDRESS],
-//     });
-
-//     return result;
-//   } catch (error) {
-//     console.error(error);
-//     return false;
-//   }
-// };

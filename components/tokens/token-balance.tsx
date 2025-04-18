@@ -23,6 +23,8 @@ const TokenBalance = ({ token }: TokenBalanceProps) => {
       chainId: token.chain.chain_id,
       query: {
         enabled: !!address && token.address !== NATIVE_TOKEN_ADDRESS,
+        staleTime: 0,
+        refetchInterval: 30 * 1000, // 30 seconds
       },
     });
   const { data: nativeBalance, isLoading: isNativeBalanceLoading } = useBalance(

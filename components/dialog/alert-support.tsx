@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Spinner, X } from "@phosphor-icons/react/dist/ssr";
-import { useAccount, useReadContract } from "wagmi";
+import { useAccount, useReadContract, useSwitchChain } from "wagmi";
 import { ERC20_ABI } from "@/constants/erc20-abi";
 import { Address } from "viem";
 import {
@@ -29,20 +29,73 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Separator } from "../ui/separator";
 import DialogSteps from "./steps";
+import toast from "react-hot-toast";
+import useWaitForTxAction from "@/hooks/useWaitForTxAction";
+import { giveAllowance } from "@/web3/erc20";
+import { CircleNotch } from "@phosphor-icons/react/dist/ssr";
+import { supportWithNative, supportWithToken } from "@/web3/streamfund";
 
 interface DialogAlertSupportProps {
   disabled: boolean;
   support: SupportState;
+  hanldeResetForm: () => void;
 }
 
-const DialogAlertSupport = ({ disabled, support }: DialogAlertSupportProps) => {
+const DialogAlertSupport = ({
+  disabled,
+  support,
+  hanldeResetForm,
+}: DialogAlertSupportProps) => {
   const pathname = usePathname();
-  const { address } = useAccount();
+  const { address, chainId } = useAccount();
+  const { switchChainAsync } = useSwitchChain();
+  const [isOpen, setIsOpen] = useState(false);
   const [triggered, setTriggered] = useState(false);
+  const [supportState, setSupportState] = useState<"approve" | "confirm">(
+    "approve"
+  );
+  const [isApproving, setIsApproving] = useState(true);
+  const [txHash, setTxHash] = useState<Address | undefined>();
   const [progress, setProgress] = useState<ProgressState>({
-    approve: "not-started",
-    sign: "not-started",
+    approve: "waiting",
     confirm: "not-started",
+  });
+
+  const handlePostAction = async () => {
+    if (!address) return;
+    if (!chainId) return;
+    if (support.token === undefined) return;
+
+    if (isApproving && supportState === "approve") {
+      toast.success("Allowance has been granted, now supporting");
+      setProgress((prev) => ({ ...prev, approve: "done", confirm: "waiting" }));
+      setSupportState("confirm");
+      setIsApproving(false);
+      setTxHash(undefined);
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await handleSupport();
+    } else {
+      toast.success("Your support has been sent successfully");
+      hanldeResetForm();
+      setProgress((prev) => ({ ...prev, confirm: "done" }));
+      setIsOpen(false);
+      resetState();
+      setTxHash(undefined);
+      setTriggered(false);
+      setSupportState("approve");
+      setIsApproving(true);
+      setProgress({
+        approve: "not-started",
+        confirm: "not-started",
+      });
+    }
+  };
+
+  useWaitForTxAction({
+    action: handlePostAction,
+    txHash,
+    chainId: support.token?.chain.chain_id,
   });
 
   const { data: allowance, isLoading: isAllowanceLoading } = useReadContract({
@@ -61,6 +114,7 @@ const DialogAlertSupport = ({ disabled, support }: DialogAlertSupportProps) => {
         support.to !== undefined &&
         getStreamFundAddresses(support.token?.chain.chain_id ?? 0) !== "0x",
       staleTime: 0,
+      refetchInterval: 30 * 1000, // 30 seconds
     },
   });
 
@@ -68,23 +122,134 @@ const DialogAlertSupport = ({ disabled, support }: DialogAlertSupportProps) => {
     setTriggered(false);
     setProgress({
       approve: "not-started",
-      sign: "not-started",
       confirm: "not-started",
     });
   };
 
-  const handleSupport = () => {
+  const handleApprove = async () => {
+    if (!address) return;
+    if (!chainId) return;
+    if (support.token === undefined) return;
+
+    try {
+      if (chainId !== support.token.chain.chain_id) {
+        const result = await switchChainAsync({
+          chainId: support.token.chain.chain_id,
+        });
+        if (result === undefined) return;
+      }
+
+      setProgress((prev) => ({ ...prev, approve: "waiting" }));
+      const result = await giveAllowance(
+        address,
+        support.token.address as Address,
+        support.token.chain.chain_id
+      );
+      if (result === false) return;
+      setTxHash(result);
+      toast.custom((t) => (
+        <div
+          className={cn(
+            "flex flex-row items-center justify-start space-x-2 bg-neutral-900 text-neutral-20 p-2.5 rounded-lg border border-neutral-800",
+            t.visible ? "animate-enter" : "animate-leave"
+          )}
+        >
+          <CircleNotch
+            className="text-violet-500 animate-spin w-5 h-5"
+            onClick={() => toast.dismiss(t.id)}
+          />
+          <p className="text-neutral-20 text-label">
+            Transaction submitted, waiting for confirmation...
+          </p>
+        </div>
+      ));
+    } catch (error) {
+      console.error("Error approving transaction:", error);
+      toast.error("Error approving transaction");
+    }
+  };
+
+  const handleSupport = async () => {
+    if (!address) return;
+    if (!chainId) return;
+    if (support.token === undefined) return;
+
+    try {
+      if (chainId !== support.token.chain.chain_id) {
+        const result = await switchChainAsync({
+          chainId: support.token.chain.chain_id,
+        });
+        if (result === undefined) return;
+      }
+
+      let result: Address;
+      setSupportState("confirm");
+      setProgress((prev) => ({
+        ...prev,
+        approve: "done",
+        confirm: "waiting",
+      }));
+
+      if (support.token.address === NATIVE_TOKEN_ADDRESS) {
+        result = await supportWithNative(
+          Number(support.amount) * Number(10 ** support.token.decimal),
+          support.to as Address,
+          `${support.from},${support.message}`,
+          support.token.chain.chain_id
+        );
+      } else {
+        result = await supportWithToken(
+          Number(support.amount) * Number(10 ** support.token.decimal),
+          support.to as Address,
+          support.token.address as Address,
+          `${support.from},${support.message}`,
+          support.token.chain.chain_id
+        );
+      }
+
+      setTxHash(result);
+      toast.custom((t) => (
+        <div
+          className={cn(
+            "flex flex-row items-center justify-start space-x-2 bg-neutral-900 text-neutral-20 p-2.5 rounded-lg border border-neutral-800",
+            t.visible ? "animate-enter" : "animate-leave"
+          )}
+        >
+          <CircleNotch
+            className="text-violet-500 animate-spin w-5 h-5"
+            onClick={() => toast.dismiss(t.id)}
+          />
+          <p className="text-neutral-20 text-label">
+            Transaction submitted, waiting for confirmation...
+          </p>
+        </div>
+      ));
+    } catch (error) {
+      console.error("Error supporting transaction:", error);
+      toast.error("Error supporting transaction");
+    }
+  };
+
+  const handleExecute = async () => {
+    if (!address) return;
+    if (!chainId) return;
+    if (support.token === undefined) return;
     setTriggered(true);
 
-    if (
-      allowance !== undefined &&
-      support.token &&
-      allowance <
-        BigInt(Number(support.amount) * Number(10 ** support.token.decimal))
-    ) {
-      setProgress((prev) => ({ ...prev, approve: "waiting" }));
-    } else {
-      setProgress((prev) => ({ ...prev, approve: "done", sign: "waiting" }));
+    try {
+      if (
+        allowance !== undefined &&
+        allowance <
+          BigInt(Number(support.amount) * Number(10 ** support.token.decimal))
+      ) {
+        await handleApprove();
+        return;
+      } else {
+        await handleSupport();
+      }
+    } catch (error) {
+      console.error("Error supporting transaction:", error);
+      toast.error("Error supporting transaction");
     }
   };
 
@@ -96,12 +261,18 @@ const DialogAlertSupport = ({ disabled, support }: DialogAlertSupportProps) => {
         BigInt(Number(support.amount) * Number(10 ** support.token.decimal))
     ) {
       setProgress((prev) => ({ ...prev, approve: "done" }));
+      setIsApproving(false);
+    } else {
+      setProgress((prev) => ({ ...prev, approve: "not-started" }));
+      setIsApproving(true);
     }
   }, [allowance, support]);
 
   return (
     <Dialog
+      open={isOpen}
       onOpenChange={() => {
+        setIsOpen((prev) => !prev);
         if (triggered) {
           resetState();
         }
@@ -241,8 +412,8 @@ const DialogAlertSupport = ({ disabled, support }: DialogAlertSupportProps) => {
         )}
         <DialogFooter className="flex flex-row items-center justify-between w-full h-fit">
           <Button
-            type="submit"
-            onClick={handleSupport}
+            type="button"
+            onClick={() => handleExecute()}
             disabled={
               isAllowanceLoading || allowance === undefined || triggered
             }
@@ -252,7 +423,7 @@ const DialogAlertSupport = ({ disabled, support }: DialogAlertSupportProps) => {
             )}
           >
             {isAllowanceLoading ? (
-              <Spinner className="w-5 h-5 animate-spin text-neutral-20" />
+              <Spinner className="size-8 animate-spin text-neutral-800" />
             ) : allowance !== undefined &&
               support?.token &&
               allowance <

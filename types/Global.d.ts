@@ -7,12 +7,11 @@ export {};
 
 declare global {
   type StepType = "approve" | "support";
-  type ProgressType = "approve" | "sign" | "confirm";
+  type ProgressType = "approve" | "confirm";
   type ProgressStatusType = "not-started" | "waiting" | "done";
 
   interface ProgressState {
     approve: ProgressStatusType;
-    sign: ProgressStatusType;
     confirm: ProgressStatusType;
   }
   interface SupportState {

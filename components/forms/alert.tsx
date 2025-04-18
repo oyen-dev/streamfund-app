@@ -73,6 +73,26 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
     },
   });
 
+  const handleResetForm = () => {
+    form.reset();
+    setQuickAmount(undefined);
+    setSelectedToken(undefined);
+    setIsAnonymous(false);
+    setSupport({
+      to: "",
+      amount: 0,
+      token: undefined,
+      message: "",
+      from: "",
+    });
+    form.setValue("quickAmount", undefined);
+    form.setValue("amount", "");
+    form.setValue("token", "");
+    form.setValue("from", "");
+    form.setValue("message", "");
+    form.setValue("address", streamer.address);
+  };
+
   const handleQuickAmountChange = (amount: number) => {
     if (selectedToken === undefined) {
       toast.custom((t) => (
@@ -396,6 +416,7 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
             amount and coin/token to the streamer.
           </p>
           <DialogAlertSupport
+            hanldeResetForm={handleResetForm}
             disabled={!form.formState.isValid}
             support={support}
           />
