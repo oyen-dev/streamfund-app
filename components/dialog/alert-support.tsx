@@ -415,7 +415,9 @@ const DialogAlertSupport = ({
             type="button"
             onClick={() => handleExecute()}
             disabled={
-              isAllowanceLoading || allowance === undefined || triggered
+              support.token?.address === NATIVE_TOKEN_ADDRESS
+                ? false
+                : isAllowanceLoading || allowance === undefined || triggered
             }
             className={cn(
               "w-full font-bold text-[16px] md:text-[18px] lg:text-[20px] leading-[1.5] tracking-[0%] rounded-lg p-7 cursor-pointer bg-violet-500 text-neutral-800 hover:bg-violet-600 focus:ring-2 focus:ring-violet-500 focus:ring-offset-0",
