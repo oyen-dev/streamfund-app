@@ -109,12 +109,11 @@ const DialogAlertSupport = ({
     chainId: support.token?.chain.chain_id,
     query: {
       enabled:
+        isOpen &&
         !!address &&
         support.token?.address !== NATIVE_TOKEN_ADDRESS &&
         support.to !== undefined &&
         getStreamFundAddresses(support.token?.chain.chain_id ?? 0) !== "0x",
-      staleTime: 0,
-      refetchInterval: 30 * 1000, // 30 seconds
     },
   });
 

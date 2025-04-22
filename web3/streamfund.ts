@@ -56,7 +56,6 @@ export const supportWithToken = async (
 
     return result;
   } catch (error) {
-    console.log(error);
     console.error("Error giving allowance:", error);
     throw error;
   }

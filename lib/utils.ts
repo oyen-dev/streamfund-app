@@ -62,7 +62,6 @@ export const fetchProxy = async ({ method, url, body }: FetchProxyProps) => {
 
     return await response.json();
   } catch (error) {
-    console.log(error);
     console.error(`Error in ${method} ${url}:`, error);
     return error;
   }
