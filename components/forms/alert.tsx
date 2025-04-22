@@ -405,11 +405,11 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
         <div className="w-full flex flex-col items-center justify-center space-y-4">
           <p className="w-full text-caption text-neutral-80 text-justify">
             By using our services, you agree to our{" "}
-            <Link href="/terms" className="text-violet-500">
+            <Link href="/terms-of-service" className="text-violet-500">
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="/privacy" className="text-violet-500">
+            <Link href="/privacy-policy" className="text-violet-500">
               Privacy Policy
             </Link>
             . Please double-check and ensure that you are sending the correct
