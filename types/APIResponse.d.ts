@@ -84,7 +84,7 @@ declare global {
 
   interface APIBaseErrorResponse {
     error: string;
-    message: string[];
+    message: string[] | string;
     statusCode: number;
   }
 
@@ -103,6 +103,21 @@ declare global {
   interface APIGetStreamerResponse extends APIBaseResponse {
     data: {
       streamer: Streamer;
+    };
+  }
+
+  interface APISignInResponse extends APIBaseResponse {
+    data: {
+      domain: string;
+      address: string;
+      statement: string;
+      uri: string;
+      version: string;
+      nonce: string;
+      issuedAt: string;
+      expirationTime: string;
+      chainId: number;
+      token: string;
     };
   }
 }

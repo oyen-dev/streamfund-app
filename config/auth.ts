@@ -20,7 +20,6 @@ declare module "next-auth/jwt" {
   interface JWT {
     accessToken: string;
     address: string;
-    chainId: number;
   }
 }
 
@@ -60,24 +59,39 @@ export const authConfig: NextAuthOptions = {
             throw new Error("Nonce mismatch");
           }
 
-          // Verify the signature
-          const verificationResult = await siweMessage.verify({
+          const payload = {
+            message: credentials.message,
             signature: credentials.signature,
-            domain: siweMessage.domain,
-            nonce: siweMessage.nonce,
-          });
+            address: siweMessage.address,
+          };
 
-          if (verificationResult) {
-            return {
-              id: siweMessage.address,
-              address: siweMessage.address,
-              accessToken: credentials.signature,
-              chainId: siweMessage.chainId,
-            };
+          const response = await fetch(
+            `${process.env.BACKEND_BASEURL}/api/v1/auth/sign-in`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(payload),
+            }
+          );
+
+          const result = (await response.json()) as APISignInResponse;
+
+          if (!response.ok) {
+            console.error("Error during authorization:", result);
+            throw new Error(
+              Array.isArray(result.message)
+                ? result.message.join(", ")
+                : result.message
+            );
           }
-
-          console.error("Signature verification failed");
-          return null;
+          return {
+            id: siweMessage.address,
+            address: siweMessage.address,
+            accessToken: result.data.token,
+            chainId: siweMessage.chainId,
+          };
         } catch (error) {
           console.error("Error during authorization:", error);
           throw new Error("Authorization failed");
@@ -95,14 +109,12 @@ export const authConfig: NextAuthOptions = {
       if (user) {
         token.accessToken = user.accessToken;
         token.address = user.address;
-        token.chainId = user.chainId;
       }
       return token;
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
       session.user.address = token.address;
-      session.chainId = token.chainId;
       return session;
     },
   },
