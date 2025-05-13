@@ -62,7 +62,6 @@ export const authConfig: NextAuthOptions = {
           const payload = {
             message: credentials.message,
             signature: credentials.signature,
-            address: siweMessage.address,
           };
 
           const response = await fetch(

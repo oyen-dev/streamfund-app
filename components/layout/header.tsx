@@ -5,7 +5,7 @@ import React from "react";
 
 const Header = () => {
   return (
-    <div className="flex w-full h-full items-center justify-between p-5 bg-background-base border-b-4  border-neutral-800">
+    <div className="flex w-full h-[10vh] items-center justify-between p-5 bg-background-base border-b-4  border-neutral-800">
       <Link href="/" className="flex flex-row space-x-1 items-center">
         <Image
           src="/icons/streamfund.svg"

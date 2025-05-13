@@ -21,16 +21,6 @@ export const siweAdapter = createAuthenticationAdapter({
   },
 
   createMessage: ({ nonce, address, chainId }) => {
-    console.info("Creating message", {
-      domain: window.location.host,
-      address,
-      statement: `You are signing in to StreamFund on ${new Date().toLocaleString()}`,
-      uri: window.location.origin,
-      version: "1",
-      chainId,
-      nonce,
-      expirationTime: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
-    });
     return createSiweMessage({
       domain: window.location.host,
       address,

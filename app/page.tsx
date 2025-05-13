@@ -4,7 +4,7 @@ import React from "react";
 
 const Home = async () => {
   return (
-    <div className="flex flex-col space-y-5 items-center justify-center h-screen p-5 text-neutral-20">
+    <div className="flex flex-col space-y-5 items-center justify-center h-full p-5 text-neutral-20">
       <h1 className="text-4xl font-bold text-center">Welcome to StreamFund!</h1>
       <p className="mt-4 text-lg">
         Engage with your favorite creators and support them through donations.

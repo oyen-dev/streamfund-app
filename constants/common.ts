@@ -37,3 +37,30 @@ export const getStreamFundAddresses = (chainId: number): Address => {
     contractAddress as unknown as keyof typeof contracts
   ] as Address;
 };
+
+export const DASHBOARD_MENUS = [
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+  },
+  {
+    name: "Alert",
+    href: "/dashboard/alert",
+  },
+  {
+    name: "QR Code",
+    href: "/dashboard/qr",
+  },
+  {
+    name: "Marquee",
+    href: "/dashboard/marquee",
+  },
+  {
+    name: "Media",
+    href: "/dashboard/media",
+  },
+  {
+    name: "Soundboard",
+    href: "/dashboard/soundboard",
+  },
+];
