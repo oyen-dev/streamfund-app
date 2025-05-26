@@ -64,13 +64,13 @@ const StreamerTabs = ({ streamer }: StreamerTabsProps) => {
 
       <TabsContent value="media" className="px-6 mt-4">
         <div className="flex items-center justify-center h-20 text-gray-500">
-          Media content will appear here
+          Coming soon...
         </div>
       </TabsContent>
 
       <TabsContent value="soundboard" className="px-6 mt-4">
         <div className="flex items-center justify-center h-20 text-gray-500">
-          Soundboard content will appear here
+          Coming soon...
         </div>
       </TabsContent>
     </Tabs>

@@ -47,14 +47,12 @@ declare global {
     id: string;
     username: string;
     bio: string;
-    image: string;
+    image: string | null;
     x: string | null;
     tiktok: string | null;
     instagram: string | null;
     youtube: string | null;
     website: string | null;
-    streamer_id: string;
-    viewer_id: string;
     created_at: string;
     updated_at: string;
     deleted_at: string | null;
@@ -63,7 +61,8 @@ declare global {
   interface Streamer {
     id: string;
     address: string;
-    usd_total_support: number;
+    usd_total_receive: number;
+    usd_total_given: number;
     created_at: string;
     updated_at: string;
     deleted_at: string | null;
@@ -79,7 +78,7 @@ declare global {
       total?: number;
     };
     data?: unknown;
-    status_code: number;
+    statusCode: number;
   }
 
   interface APIBaseErrorResponse {
@@ -102,7 +101,7 @@ declare global {
 
   interface APIGetStreamerResponse extends APIBaseResponse {
     data: {
-      streamer: Streamer;
+      user: Streamer;
     };
   }
 

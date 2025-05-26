@@ -5,7 +5,7 @@ const StreamerBanner = () => {
   return (
     <div className="relative w-full h-40 max-w-2xl md:h-60 rounded-2xl">
       <Image
-        src="/images/streamfund.jpg"
+        src="/images/banner.jpg"
         fill
         loading="lazy"
         alt="Banner"
