@@ -96,7 +96,7 @@ export default async function RootLayout({
       >
         <AuthProvider session={session} cookie={cookie}>
           <Header />
-          {children}
+          <div className="container mx-auto pt-[100px]">{children}</div>
           <Toaster
             toastOptions={{
               duration: 3000,

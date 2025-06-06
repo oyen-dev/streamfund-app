@@ -1,8 +1,15 @@
 import { Button } from "@/components/ui/button";
+import { authConfig } from "@/config/auth";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import React from "react";
 
 const Home = async () => {
+  const session = await getServerSession(authConfig);
+  if (session) {
+    return redirect("/dashboard");
+  }
   return (
     <div className="flex flex-col space-y-5 items-center justify-center h-full p-5 text-neutral-20">
       <h1 className="text-4xl font-bold text-center">Welcome to StreamFund!</h1>

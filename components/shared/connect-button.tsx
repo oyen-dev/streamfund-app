@@ -3,7 +3,7 @@
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 import { ConnectButton as RainbowConnectButton } from "@rainbow-me/rainbowkit";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 const ConnectButton = () => {
   const { openConnectModal } = useConnectModal();

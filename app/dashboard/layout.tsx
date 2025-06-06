@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import DashboardLayout from "./_components/layout";
+import { getServerSession } from "next-auth";
+import { authConfig } from "@/config/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Dashboard | StreamFund",
@@ -64,5 +67,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authConfig);
+  if (!session) {
+    return redirect("/");
+  }
   return <DashboardLayout>{children}</DashboardLayout>;
 }

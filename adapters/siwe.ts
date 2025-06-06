@@ -34,9 +34,11 @@ export const siweAdapter = createAuthenticationAdapter({
   },
 
   verify: async ({ message, signature }) => {
+    const isInHomePage = window.location.pathname === "/";
     const loginData = { message, signature };
     const verifyResult = await signIn("credentials", {
-      redirect: false,
+      redirect: isInHomePage ? true : false,
+      callbackUrl: isInHomePage ? "/dashboard" : undefined,
       ...loginData,
     });
 
@@ -44,6 +46,10 @@ export const siweAdapter = createAuthenticationAdapter({
   },
 
   signOut: async () => {
-    await signOut({ redirect: false });
+    const isInDashboard = window.location.pathname.includes("/dashboard");
+    await signOut({
+      redirect: isInDashboard,
+      callbackUrl: isInDashboard ? "/" : undefined,
+    });
   },
 });
