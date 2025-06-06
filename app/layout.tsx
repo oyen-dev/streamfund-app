@@ -12,13 +12,13 @@ import { Toaster } from "react-hot-toast";
 const SpaceFont = Space_Grotesk({
   variable: "--font-space",
   subsets: ["latin"],
-  weight: ["500", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   fallback: ["system-ui", "sans-serif"],
 });
 const InterFont = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   fallback: ["system-ui", "sans-serif"],
 });
 

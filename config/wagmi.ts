@@ -7,7 +7,7 @@ import {
   polygonAmoy,
   avalancheFuji,
   optimismSepolia,
-  sonicTestnet,
+  sonicBlazeTestnet,
   berachainBepolia,
 } from "viem/chains";
 import { cookieStorage, createStorage, http } from "wagmi";
@@ -23,7 +23,7 @@ export const wagmiConfig = getDefaultConfig({
     polygonAmoy,
     avalancheFuji,
     optimismSepolia,
-    sonicTestnet,
+    sonicBlazeTestnet,
     berachainBepolia,
   ],
   ssr: true,
@@ -52,7 +52,7 @@ export const wagmiConfig = getDefaultConfig({
     [optimismSepolia.id]: http(
       `https://arb-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
     ),
-    [sonicTestnet.id]: http(
+    [sonicBlazeTestnet.id]: http(
       `https://sonic-blaze.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
     ),
     [berachainBepolia.id]: http(
