@@ -1,12 +1,23 @@
 import { Address } from "viem";
 import {
-  baseSepolia,
-  arbitrumSepolia,
-  optimismSepolia,
+  mainnet,
+  sepolia,
+  bsc,
+  bscTestnet,
   base,
+  baseSepolia,
   arbitrum,
+  arbitrumSepolia,
+  polygon,
+  polygonAmoy,
+  avalanche,
+  avalancheFuji,
   optimism,
-  eduChainTestnet,
+  optimismSepolia,
+  sonic,
+  sonicBlazeTestnet,
+  berachain,
+  berachainBepolia,
 } from "viem/chains";
 
 interface QnA {
@@ -21,14 +32,24 @@ export const NATIVE_TOKEN_ADDRESS =
 
 export const getStreamFundAddresses = (chainId: number): Address => {
   const contracts = {
-    0: "0x",
+    [mainnet.id]: "0xstr",
+    [bsc.id]: "0xstr",
     [base.id]: "0xstr",
     [arbitrum.id]: "0xstr",
+    [polygon.id]: "0xstr",
+    [avalanche.id]: "0xstr",
     [optimism.id]: "0xstr",
-    [baseSepolia.id]: "0xf56FC21f3B799086099d74a9F7F505e6EA1f6fec",
-    [arbitrumSepolia.id]: "0x4f346f17c50270E7A3Bfc859671D24eFAab0B1aF",
-    [optimismSepolia.id]: "0x82EE3B66B125C0DED18035eC05fC2D2D3acAcAdB",
-    [eduChainTestnet.id]: "0x11fEB7694e03420032caEeEE4e508d1Ed3983166",
+    [sonic.id]: "0xstr",
+    [berachain.id]: "0xstr",
+    [sepolia.id]: "0xFe8029Bbde8be491FbF345530F3991Bdc40e7f86",
+    [bscTestnet.id]: "0x4B2C2fAD09eD8ACF54fF882d2236d023A4b92086",
+    [baseSepolia.id]: "0xC157df69E2484Adc6d94e651758400E19e85fDfe",
+    [arbitrumSepolia.id]: "0x1a0DD23D7525F40af391d1EF17CF90667123397b",
+    [polygonAmoy.id]: "0x82EE3B66B125C0DED18035eC05fC2D2D3acAcAdB",
+    [avalancheFuji.id]: "0x4B2C2fAD09eD8ACF54fF882d2236d023A4b92086",
+    [optimismSepolia.id]: "0xA5dd89e5369b2319d5CE2E742872bEf8B07344e4",
+    [sonicBlazeTestnet.id]: "0x3780bf16e667e8b7f12cD818Db4831C6d9Ab490F",
+    [berachainBepolia.id]: "0x11fEB7694e03420032caEeEE4e508d1Ed3983166",
   };
 
   const contractAddress = Object.keys(contracts).find(
