@@ -17,18 +17,23 @@ export const metadata: Metadata = {
     "platform eligibility",
     "legal terms",
   ],
-  robots: "index, follow",
-  creator: "StreamFund Team",
+  creator: "StreamFund",
   authors: [
     {
-      name: "StreamFund Team",
+      name: "StreamFund",
       url: process.env.NEXT_PUBLIC_APP_URL,
     },
   ],
   publisher: "StreamFund",
   applicationName: "StreamFund",
-  formatDetection: {
-    telephone: false,
+  category: "Web3 Creator Platform",
+  viewport: "width=device-width, initial-scale=1.0",
+  robots: {
+    index: true,
+    follow: true,
+    noarchive: true,
+    nosnippet: false,
+    noimageindex: false,
   },
   twitter: {
     card: "summary_large_image",
@@ -43,6 +48,8 @@ export const metadata: Metadata = {
         alt: "StreamFund Terms of Service",
       },
     ],
+    creator: "@streamfundlive",
+    site: "@streamfundlive",
   },
   openGraph: {
     title: "Terms of Service | StreamFund",

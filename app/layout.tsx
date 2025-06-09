@@ -8,6 +8,7 @@ import { authConfig } from "@/config/auth";
 import { headers } from "next/headers";
 import Header from "@/components/layout/header";
 import { Toaster } from "react-hot-toast";
+import Footer from "@/components/layout/footer";
 
 const SpaceFont = Space_Grotesk({
   variable: "--font-space",
@@ -23,60 +24,74 @@ const InterFont = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "StreamFund | Engage and Support Creators",
+  title: "StreamFund | Real-Time Crypto Support for Creators",
   description:
-    "StreamFund is a platform that allows you to engage with your favorite creators and support them through donations.",
+    "StreamFund connects creators and viewers through direct crypto donations with instant payouts, real-time engagement, and cross-platform compatibility. Low fees, any cryptocurrency.",
   keywords: [
     "StreamFund",
-    "streaming",
-    "donations",
-    "support creators",
-    "engage with creators",
-    "creator economy",
-    "live streaming",
-    "content creation",
-    "monetization",
-    "community engagement",
-    "fan support",
+    "crypto donations",
     "creator support",
-    "live donations",
+    "instant payouts",
+    "peer-to-peer",
+    "real-time engagement",
+    "cross platform",
+    "content creators",
+    "web3 streaming",
+    "low fees",
+    "cryptocurrency",
+    "direct support",
+    "stream monetization",
+    "creator economy",
+    "blockchain payments",
   ],
   creator: "StreamFund",
   authors: {
     name: "StreamFund",
-    url: process.env.URL,
+    url: process.env.NEXT_PUBLIC_APP_URL,
   },
   publisher: "StreamFund",
-  applicationName: "StreamFund App",
+  applicationName: "StreamFund",
+  category: "Web3 Creator Platform",
+  viewport: "width=device-width, initial-scale=1.0",
+  robots: {
+    index: true,
+    follow: true,
+    noarchive: true,
+    nosnippet: false,
+    noimageindex: false,
+  },
   twitter: {
     card: "summary_large_image",
-    title: "StreamFund | Engage and Support Creators",
+    title: "StreamFund | Real-Time Crypto Support for Creators",
     description:
-      "StreamFund is a platform that allows you to engage with your favorite creators and support them through donations.",
+      "Direct P2P crypto donations with instant payouts, real-time engagement, and cross-platform compatibility. Low fees, any cryptocurrency.",
     images: [
       {
-        url: `${process.env.URL}/images/streamfund.jpg`,
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/images/banner.jpg`,
         width: 1200,
         height: 630,
-        alt: "StreamFund | Engage and Support Creators",
+        alt: "StreamFund | Real-Time Crypto Support for Creators",
       },
     ],
+    creator: "@streamfundlive",
+    site: "@streamfundlive",
   },
   openGraph: {
-    title: "StreamFund | Engage and Support Creators",
+    title: "StreamFund | Real-Time Crypto Support for Creators",
     description:
-      "StreamFund is a platform that allows you to engage with your favorite creators and support them through donations.",
-    url: process.env.URL,
+      "Direct P2P crypto donations with instant payouts, real-time engagement, and cross-platform compatibility. Low fees, any cryptocurrency.",
+    url: process.env.NEXT_PUBLIC_APP_URL,
     siteName: "StreamFund",
     images: [
       {
-        url: `${process.env.URL}/images/streamfund.jpg`,
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/images/streamfund.jpg`,
         width: 1200,
         height: 630,
-        alt: "StreamFund | Engage and Support Creators",
+        alt: "StreamFund | Real-Time Crypto Support for Creators",
         type: "image/jpeg",
       },
     ],
+    locale: "en_US",
     type: "website",
   },
 };
@@ -96,7 +111,8 @@ export default async function RootLayout({
       >
         <AuthProvider session={session} cookie={cookie}>
           <Header />
-          <div className="container mx-auto pt-[100px]">{children}</div>
+          {children}
+          <Footer />
           <Toaster
             toastOptions={{
               duration: 3000,

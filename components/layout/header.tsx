@@ -52,33 +52,6 @@ const Header = () => {
           </p>
         </Link>
 
-        <ul className="hidden lg:flex flex-row space-x-5">
-          <li>
-            <Link
-              href="/#products"
-              className="text-label font-inter font-medium text-neutral-20 hover:text-violet-500"
-            >
-              Products
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/#solutions"
-              className="text-label font-inter font-medium text-neutral-20 hover:text-violet-500"
-            >
-              Solutions
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/#contacts"
-              className="text-label font-inter font-medium text-neutral-20 hover:text-violet-500"
-            >
-              Contacts
-            </Link>
-          </li>
-        </ul>
-
         <ConnectButton />
       </div>
     </nav>
