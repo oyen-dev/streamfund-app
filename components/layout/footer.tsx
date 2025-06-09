@@ -57,7 +57,7 @@ const Footer = () => {
 
       <div className="flex flex-row items-center justify-between container mx-auto">
         <div className="flex flex-row items-center justify-center">
-          <ul className="flex flex-row space-x-5">
+          <ul className="flex flex-row space-x-3">
             <li>
               <Link
                 href="/privacy-policy"
