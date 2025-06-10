@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import AuthProvider from "@/providers/AuthProvider";
 import { getServerSession, Session } from "next-auth";
@@ -23,6 +23,11 @@ const InterFont = Inter({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   fallback: ["system-ui", "sans-serif"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+};
 
 export const metadata: Metadata = {
   title: "StreamFund | Real-Time Crypto Support for Creators",
@@ -53,7 +58,6 @@ export const metadata: Metadata = {
   publisher: "StreamFund",
   applicationName: "StreamFund",
   category: "Web3 Creator Platform",
-  viewport: "width=device-width, initial-scale=1.0",
   robots: {
     index: true,
     follow: true,

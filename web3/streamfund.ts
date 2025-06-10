@@ -9,7 +9,7 @@ export const supportWithNative = async (
   amount: number,
   streamer: Address,
   data: string,
-  chainId: number
+  chainId: number | undefined
 ) => {
   const encodedMessage = new AbiCoder().encode(
     ["string"],
@@ -23,7 +23,7 @@ export const supportWithNative = async (
       functionName: "supportWithETH",
       value: BigInt(amount),
       args: [streamer, encodedMessage],
-      chainId: chainId as 84532 | 421614 | 11155420 | 656476 | undefined,
+      chainId: chainId as NetworkAvailableChainId,
     });
 
     return result;
@@ -38,7 +38,7 @@ export const supportWithToken = async (
   streamer: Address,
   token: Address,
   data: string,
-  chainId: number
+  chainId: number | undefined
 ) => {
   const encodedMessage = new AbiCoder().encode(
     ["string"],
@@ -51,7 +51,7 @@ export const supportWithToken = async (
       address: contractAddress,
       functionName: "supportWithToken",
       args: [streamer, token, BigInt(amount), encodedMessage],
-      chainId: chainId as 84532 | 421614 | 11155420 | 656476 | undefined,
+      chainId: chainId as NetworkAvailableChainId,
     });
 
     return result;

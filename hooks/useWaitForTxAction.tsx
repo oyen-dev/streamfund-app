@@ -18,7 +18,7 @@ const useWaitForTxAction = ({
   const waitTx = useWaitForTransactionReceipt({
     hash: txHash,
     config: wagmiConfig,
-    chainId: chainId as 84532 | 421614 | 11155420 | 656476 | undefined,
+    chainId: chainId as NetworkAvailableChainId,
   });
 
   useEffect(() => {

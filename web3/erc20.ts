@@ -7,7 +7,7 @@ import { wagmiConfig } from "@/config/wagmi";
 export const giveAllowance = async (
   user: Address,
   token: Address,
-  chainId: number
+  chainId: number | undefined
 ) => {
   const maxAmount = BigInt(
     "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
@@ -20,7 +20,7 @@ export const giveAllowance = async (
       functionName: "approve",
       args: [contractAddress, maxAmount],
       account: user,
-      chainId: chainId as 84532 | 421614 | 11155420 | 656476 | undefined,
+      chainId: chainId as NetworkAvailableChainId,
     });
 
     return result;

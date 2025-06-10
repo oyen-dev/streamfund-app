@@ -30,7 +30,9 @@ export const QUICK_AMOUNTS = [1, 1.5, 5, 10];
 export const NATIVE_TOKEN_ADDRESS =
   "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
 
-export const getStreamFundAddresses = (chainId: number): Address => {
+export const getStreamFundAddresses = (
+  chainId: number | undefined
+): Address => {
   const contracts = {
     [mainnet.id]: "0xstr",
     [bsc.id]: "0xstr",

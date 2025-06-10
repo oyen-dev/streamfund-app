@@ -1,5 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fragment } from "react";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+};
 
 export const metadata: Metadata = {
   title: "Terms of Service | StreamFund",
@@ -27,7 +32,6 @@ export const metadata: Metadata = {
   publisher: "StreamFund",
   applicationName: "StreamFund",
   category: "Web3 Creator Platform",
-  viewport: "width=device-width, initial-scale=1.0",
   robots: {
     index: true,
     follow: true,
