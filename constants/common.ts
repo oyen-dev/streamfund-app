@@ -34,6 +34,7 @@ export const getStreamFundAddresses = (
   chainId: number | undefined
 ): Address => {
   const contracts = {
+    0: "0xstr",
     [mainnet.id]: "0xstr",
     [bsc.id]: "0xstr",
     [base.id]: "0xstr",

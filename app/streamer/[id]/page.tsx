@@ -25,7 +25,7 @@ const StreamerSupportPage = () => {
   });
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-5 space-y-6 text-white">
+    <div className="flex flex-col items-center min-h-screen p-5 space-y-6 text-white pt-[150px]">
       {isLoading ? (
         <div className="flex items-center justify-center w-full h-full">
           <p className="text-lg">Loading...</p>

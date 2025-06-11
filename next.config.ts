@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       "coin-images.coingecko.com",
       "localhost",
       "api.dicebear.com",
+      "api.testnet.streamfund.live",
     ],
   },
   webpack: (config) => {

@@ -55,10 +55,7 @@ const StreamerTabs = ({ streamer }: StreamerTabsProps) => {
         </TabsList>
       </div>
 
-      <TabsContent
-        value="alert"
-        className="p-5 border rounded-2xl border-neutral-800"
-      >
+      <TabsContent value="alert" className="p-5 rounded-2xl border-neutral-800">
         <AlertForm streamer={streamer} />
       </TabsContent>
 

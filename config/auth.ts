@@ -76,6 +76,7 @@ export const authConfig: NextAuthOptions = {
           );
 
           const result = (await response.json()) as APISignInResponse;
+          console.log("Authorization result:", result);
 
           if (!response.ok) {
             console.error("Error during authorization:", result);

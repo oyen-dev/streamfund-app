@@ -9,7 +9,6 @@ import { headers } from "next/headers";
 import Header from "@/components/layout/header";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/layout/footer";
-import { redirect } from "next/navigation";
 
 const SpaceFont = Space_Grotesk({
   variable: "--font-space",
@@ -108,10 +107,6 @@ export default async function RootLayout({
 }>) {
   const session = (await getServerSession(authConfig)) as Session;
   const cookie = (await headers()).get("cookie") as string;
-
-  if (session) {
-    return redirect("/dashboard");
-  }
 
   return (
     <html lang="en">
