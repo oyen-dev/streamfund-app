@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import TokenBalance from "./token-balance";
+
 interface TokenProps {
   token: Token;
   selectedToken: Token | undefined;

@@ -1,8 +1,5 @@
 "use client";
 
-import StreamerBanner from "@/components/streamer/banner";
-import StreamerHeaderProfile from "@/components/streamer/header";
-import StreamerTabs from "@/components/streamer/tabs";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { usePathname } from "next/navigation";
@@ -10,6 +7,9 @@ import StreamerNotFound from "./_components/not-found";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProxy } from "@/lib/utils";
 import { Fragment } from "react";
+import StreamerBanner from "./_components/banner";
+import StreamerHeaderProfile from "./_components/header";
+import StreamerTabs from "./_components/tabs";
 
 const StreamerSupportPage = () => {
   const pathname = usePathname();

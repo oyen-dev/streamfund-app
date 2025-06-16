@@ -1,7 +1,7 @@
-import { HandHeart, Handshake } from "@phosphor-icons/react/dist/ssr";
+import { HandHeartIcon, HandshakeIcon } from "@phosphor-icons/react/dist/ssr";
 import React from "react";
-import { Separator } from "../ui/separator";
 import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
 
 interface DialogStepsProps {
   symbol: string;
@@ -33,7 +33,7 @@ const DialogSteps = ({ symbol, variant, progress }: DialogStepsProps) => {
               progress.approve === "done" && "bg-violet-500"
             )}
           >
-            <Handshake
+            <HandshakeIcon
               className={cn(
                 "text-neutral-20",
                 progress.approve === "waiting" ? "w-8 h-8" : "w-5 h-5"
@@ -89,7 +89,7 @@ const DialogSteps = ({ symbol, variant, progress }: DialogStepsProps) => {
               progress.confirm === "done" && "bg-violet-500"
             )}
           >
-            <HandHeart
+            <HandHeartIcon
               className={cn(
                 "text-neutral-20",
                 progress.confirm === "waiting" ? "w-8 h-8" : "w-5 h-5"

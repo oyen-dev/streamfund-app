@@ -1,12 +1,12 @@
 "use client";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { NATIVE_TOKEN_ADDRESS } from "@/constants/common";
 import { ERC20_ABI } from "@/constants/erc20-abi";
 import { simplifyNumber } from "@/lib/utils";
 import React from "react";
 import { Address } from "viem";
 import { useAccount, useBalance, useReadContract } from "wagmi";
-import { Skeleton } from "../ui/skeleton";
 
 interface TokenBalanceProps {
   token: Token;

@@ -18,14 +18,14 @@ import {
   Coins,
 } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import Token from "./token";
 import ChainList from "./chain-list";
 import { useDebounceCallback } from "usehooks-ts";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProxy } from "@/lib/utils";
-import { Skeleton } from "../ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface TokenDialogProps {
   selectedToken: Token | undefined;

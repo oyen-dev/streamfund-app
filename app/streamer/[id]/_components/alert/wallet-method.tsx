@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { Button } from "../ui/button";
-import { CaretRight } from "@phosphor-icons/react/dist/ssr";
+import { CaretRightIcon } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import {
   useAccountModal,
@@ -11,6 +10,7 @@ import {
 } from "@rainbow-me/rainbowkit";
 import { useSession } from "next-auth/react";
 import { cn, truncateWalletAddress } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const WalletMethod = () => {
   const { openConnectModal } = useConnectModal();
@@ -60,7 +60,7 @@ const WalletMethod = () => {
           )}
         </p>
       </div>
-      <CaretRight className="w-8 h-8" />
+      <CaretRightIcon className="w-8 h-8" />
     </Button>
   );
 };

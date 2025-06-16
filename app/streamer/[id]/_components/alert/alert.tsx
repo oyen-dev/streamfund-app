@@ -15,18 +15,18 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { ethers } from "ethers";
-import TokenDialog from "../tokens/dialog";
-import { Button } from "../ui/button";
+import toast from "react-hot-toast";
+import { CaretRightIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
 import { cn, roundToTwoDigits, simplifyNumber } from "@/lib/utils";
-import { Checkbox } from "../ui/checkbox";
-import { Textarea } from "../ui/textarea";
+import TokenDialog from "../tokens/dialog";
+import QuickAmountSelection from "../tokens/quick-amount";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import WalletMethod from "./wallet-method";
 import Link from "next/link";
 import Image from "next/image";
-import { CaretRight, X } from "@phosphor-icons/react/dist/ssr";
-import WalletMethod from "../rainbow/wallet-method";
-import QuickAmountSelection from "../tokens/quick-amount";
-import toast from "react-hot-toast";
-import DialogAlertSupport from "../dialog/alert-support";
+import DialogAlertSupport from "@/app/streamer/[id]/_components/alert/alert-support";
 
 const formSchema = z.object({
   address: z.string().refine((value) => ethers.isAddress(value), {
@@ -102,7 +102,7 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
             t.visible ? "animate-enter" : "animate-leave"
           )}
         >
-          <X
+          <XIcon
             className="text-red-500 cursor-pointer w-5 h-5"
             onClick={() => toast.dismiss(t.id)}
           />
@@ -163,7 +163,7 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
             t.visible ? "animate-enter" : "animate-leave"
           )}
         >
-          <X
+          <XIcon
             className="text-red-500 cursor-pointer w-5 h-5"
             onClick={() => toast.dismiss(t.id)}
           />
@@ -372,7 +372,7 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
                   (Coming Soon)
                 </span>
               </div>
-              <CaretRight className="w-8 h-8" />
+              <CaretRightIcon className="w-8 h-8" />
             </Button>
 
             <Button
@@ -397,7 +397,7 @@ const AlertForm = ({ streamer }: AlertFormProps) => {
                   (Coming Soon)
                 </span>
               </div>
-              <CaretRight className="w-8 h-8" />
+              <CaretRightIcon className="w-8 h-8" />
             </Button>
           </div>
         </div>

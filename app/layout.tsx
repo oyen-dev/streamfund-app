@@ -6,9 +6,9 @@ import AuthProvider from "@/providers/AuthProvider";
 import { getServerSession, Session } from "next-auth";
 import { authConfig } from "@/config/auth";
 import { headers } from "next/headers";
-import Header from "@/components/layout/header";
 import { Toaster } from "react-hot-toast";
-import Footer from "@/components/layout/footer";
+import Header from "./_components/header";
+import Footer from "./_components/footer";
 
 const SpaceFont = Space_Grotesk({
   variable: "--font-space",

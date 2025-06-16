@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Spinner, X } from "@phosphor-icons/react/dist/ssr";
+import { SpinnerIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
 import { useAccount, useReadContract, useSwitchChain } from "wagmi";
 import { ERC20_ABI } from "@/constants/erc20-abi";
 import { Address } from "viem";
@@ -27,13 +27,13 @@ import {
 } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Separator } from "../ui/separator";
 import DialogSteps from "./steps";
 import toast from "react-hot-toast";
 import useWaitForTxAction from "@/hooks/useWaitForTxAction";
 import { giveAllowance } from "@/web3/erc20";
 import { CircleNotch } from "@phosphor-icons/react/dist/ssr";
 import { supportWithNative, supportWithToken } from "@/web3/streamfund";
+import { Separator } from "@/components/ui/separator";
 
 interface DialogAlertSupportProps {
   disabled: boolean;
@@ -300,7 +300,7 @@ const DialogAlertSupport = ({
             You&apos;re supporting
           </DialogTitle>
           <DialogClose>
-            <X className="size-8 text-neutral-20 cursor-pointer hover:bg-neutral-800 rounded-full p-1" />
+            <XIcon className="size-8 text-neutral-20 cursor-pointer hover:bg-neutral-800 rounded-full p-1" />
           </DialogClose>
           <DialogDescription className="hidden"></DialogDescription>
         </DialogHeader>
@@ -424,7 +424,7 @@ const DialogAlertSupport = ({
             )}
           >
             {isAllowanceLoading ? (
-              <Spinner className="size-8 animate-spin text-neutral-800" />
+              <SpinnerIcon className="size-8 animate-spin text-neutral-800" />
             ) : allowance !== undefined &&
               support?.token &&
               allowance <

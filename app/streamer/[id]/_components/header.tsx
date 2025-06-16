@@ -1,9 +1,9 @@
 import { truncateWalletAddress } from "@/lib/utils";
 import {
-  InstagramLogo,
-  YoutubeLogo,
-  XLogo,
-  Globe,
+  InstagramLogoIcon,
+  YoutubeLogoIcon,
+  XLogoIcon,
+  GlobeIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { isAddress } from "viem";
@@ -50,7 +50,7 @@ const StreamerHeaderProfile = ({ streamer }: StreamerHeaderProfileProps) => {
               rel="noopener noreferrer"
               className="p-1 border rounded-full border-neutral-600 hover:border-violet-500"
             >
-              <InstagramLogo className="w-6 h-6 cursor-pointer text-neutral-80 hover:text-violet-500" />
+              <InstagramLogoIcon className="w-6 h-6 cursor-pointer text-neutral-80 hover:text-violet-500" />
             </Link>
           )}
 
@@ -61,7 +61,7 @@ const StreamerHeaderProfile = ({ streamer }: StreamerHeaderProfileProps) => {
               rel="noopener noreferrer"
               className="p-1 border rounded-full border-neutral-600 hover:border-violet-500"
             >
-              <YoutubeLogo className="w-6 h-6 cursor-pointer text-neutral-80 hover:text-violet-500" />
+              <YoutubeLogoIcon className="w-6 h-6 cursor-pointer text-neutral-80 hover:text-violet-500" />
             </Link>
           )}
 
@@ -72,7 +72,7 @@ const StreamerHeaderProfile = ({ streamer }: StreamerHeaderProfileProps) => {
               rel="noopener noreferrer"
               className="p-1 border rounded-full border-neutral-600 hover:border-violet-500"
             >
-              <XLogo className="w-6 h-6 cursor-pointer text-neutral-80 hover:text-violet-500" />
+              <XLogoIcon className="w-6 h-6 cursor-pointer text-neutral-80 hover:text-violet-500" />
             </Link>
           )}
 
@@ -83,7 +83,7 @@ const StreamerHeaderProfile = ({ streamer }: StreamerHeaderProfileProps) => {
               rel="noopener noreferrer"
               className="p-1 border rounded-full border-neutral-600 hover:border-violet-500"
             >
-              <Globe className="w-6 h-6 cursor-pointer text-neutral-80 hover:text-violet-500" />
+              <GlobeIcon className="w-6 h-6 cursor-pointer text-neutral-80 hover:text-violet-500" />
             </Link>
           )}
         </div>

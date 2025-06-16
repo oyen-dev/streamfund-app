@@ -2,8 +2,12 @@
 
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BellRinging, Airplay, Waveform } from "@phosphor-icons/react/dist/ssr";
-import AlertForm from "../forms/alert";
+import {
+  BellRingingIcon,
+  AirplayIcon,
+  WaveformIcon,
+} from "@phosphor-icons/react/dist/ssr";
+import AlertForm from "./alert/alert";
 
 interface StreamerTabsProps {
   streamer: Streamer;
@@ -22,7 +26,7 @@ const StreamerTabs = ({ streamer }: StreamerTabsProps) => {
             onClick={() => setActiveTab("alert")}
             className="data-[state=active]:bg-violet-500/10 data-[state=active]:text-violet-500 data-[state=active]:border-violet-500 rounded-2xl p-3 border border-neutral-800 text-neutral-20 cursor-pointer flex-shrink-0"
           >
-            <BellRinging
+            <BellRingingIcon
               className="w-6 h-6 mr-2"
               weight={activeTab === "alert" ? "fill" : "regular"}
             />
@@ -34,7 +38,7 @@ const StreamerTabs = ({ streamer }: StreamerTabsProps) => {
             onClick={() => setActiveTab("media")}
             className="data-[state=active]:bg-violet-500/10 data-[state=active]:text-violet-500 data-[state=active]:border-violet-500 rounded-2xl p-3 border border-neutral-800 text-neutral-20 cursor-pointer flex-shrink-0"
           >
-            <Airplay
+            <AirplayIcon
               className="w-6 h-6 mr-2"
               weight={activeTab === "media" ? "fill" : "regular"}
             />
@@ -46,7 +50,7 @@ const StreamerTabs = ({ streamer }: StreamerTabsProps) => {
             onClick={() => setActiveTab("soundboard")}
             className="data-[state=active]:bg-violet-500/10 data-[state=active]:text-violet-500 data-[state=active]:border-violet-500 rounded-2xl p-3 border border-neutral-800 text-neutral-20 cursor-pointer flex-shrink-0"
           >
-            <Waveform
+            <WaveformIcon
               className="w-6 h-6 mr-2"
               weight={activeTab === "soundboard" ? "bold" : "regular"}
             />

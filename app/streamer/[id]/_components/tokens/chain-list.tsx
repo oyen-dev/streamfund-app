@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { cn, fetchProxy } from "@/lib/utils";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ChainListProps {
   selectedChain: Chain | undefined;

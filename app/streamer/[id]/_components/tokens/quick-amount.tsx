@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { QUICK_AMOUNTS } from "@/constants/common";
+import { Button } from "@/components/ui/button";
 
 interface QuickAmountSelectionProps {
   quickAmount: number | undefined;

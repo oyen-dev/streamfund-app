@@ -1,11 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "../ui/button";
+import { Button } from "../../components/ui/button";
 import {
-  DiscordLogo,
-  TelegramLogo,
-  XLogo,
+  DiscordLogoIcon,
+  TelegramLogoIcon,
+  XLogoIcon,
 } from "@phosphor-icons/react/dist/ssr";
 
 const Footer = () => {
@@ -31,7 +31,7 @@ const Footer = () => {
               size="icon"
               className="cursor-pointer bg-violet-500 text-neutral-800 hover:bg-violet-600 focus:ring-2 focus:ring-violet-500 focus:ring-offset-0"
             >
-              <XLogo className="size-6 text-neutral-800" />
+              <XLogoIcon className="size-6 text-neutral-800" />
             </Button>
           </Link>
 
@@ -40,7 +40,7 @@ const Footer = () => {
               size="icon"
               className="cursor-pointer bg-violet-500 text-neutral-800 hover:bg-violet-600 focus:ring-2 focus:ring-violet-500 focus:ring-offset-0"
             >
-              <DiscordLogo className="size-6 text-neutral-800" />
+              <DiscordLogoIcon className="size-6 text-neutral-800" />
             </Button>
           </Link>
 
@@ -49,7 +49,7 @@ const Footer = () => {
               size="icon"
               className="cursor-pointer bg-violet-500 text-neutral-800 hover:bg-violet-600 focus:ring-2 focus:ring-violet-500 focus:ring-offset-0"
             >
-              <TelegramLogo className="size-6 text-neutral-800" />
+              <TelegramLogoIcon className="size-6 text-neutral-800" />
             </Button>
           </Link>
         </div>
